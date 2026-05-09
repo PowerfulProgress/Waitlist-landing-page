@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(open *)",
+      "Bash(curl -sL \"https://powerfulprogress.kit.com/50858b9710/index.js\" -o /tmp/kit-embed.js)",
+      "Read(//tmp/**)",
+      "Bash(grep -oE \"fetch\\\\\\([^\\)]{0,300}|XMLHttpRequest|new FormData[^\\)]{0,80}|JSON.stringify[^\\)]{0,80}|application/json|application/x-www-form\" /tmp/kit-embed.js)",
+      "Bash(grep -oE \"submit[A-Za-z]*\\\\\\(.{0,200}|onSubmit.{0,200}|addEventListener\\\\\\(.submit.{0,200}\" /tmp/kit-embed.js)",
+      "Bash(grep -oE \"\\\\.method\\\\s*=\\\\s*[^,;]{0,40}|method:\\\\s*['\\\\\"][^'\\\\\"]+['\\\\\"]|action=\\\\\\\\\\\\\"[^\\\\\"]+\\\\\\\\\\\\\"\" /tmp/kit-embed.js)"
+    ]
+  }
+}

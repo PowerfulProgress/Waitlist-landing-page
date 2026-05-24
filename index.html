@@ -21,6 +21,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet" />
 
+<!-- Kit (ConvertKit) embed — loads ck.5.js which attaches submit handlers
+     (with reCAPTCHA/anti-spam token) to any <form data-sv-form="..."> on the page.
+     data-uid is intentionally omitted so the bundle doesn't replace this script
+     tag with a form in <head>; the visible forms are pre-rendered in <body>. -->
+<script async src="https://powerfulprogress.kit.com/50858b9710/index.js"></script>
 
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -41,8 +46,6 @@
   p { margin: 0; }
   a { color: inherit; text-decoration: none; }
 
-  /* Hidden iframe used as form submission target so the page doesn't navigate */
-  .kit-iframe { position: absolute; width: 0; height: 0; border: 0; left: -9999px; top: -9999px; }
 
   .container {
     width: 100%;
@@ -84,7 +87,7 @@
 
   /* HERO */
   .hero {
-    min-height: 88vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -96,7 +99,7 @@
     overflow: hidden;
   }
   @media (max-width: 768px) {
-    .hero { min-height: 92vh; padding: 56px 24px; }
+    .hero { min-height: 85vh; padding: 56px 24px; }
   }
   .hero-spotlight {
     position: absolute;
@@ -140,61 +143,159 @@
     .hero-stack .logo { margin-bottom: 20px; }
   }
 
-  /* Form */
-  .waitlist-form {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
+  /* Kit (ConvertKit) form — overrides scoped to our form's data-uid.
+     The embed script renders form HTML with .formkit-* classes; we restyle
+     them to match the brand without touching submission logic. */
+  .formkit-form[data-uid="50858b9710"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
   }
-  .waitlist-form input[type="email"] {
-    flex: 1;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 4px;
-    padding: 14px 16px;
-    color: #FFFFFF;
-    font-family: inherit;
-    font-size: 15px;
-    outline: none;
-    transition: border-color 200ms ease;
+  .formkit-form[data-uid="50858b9710"] [data-style="clean"],
+  .formkit-form[data-uid="50858b9710"] [data-style="full"],
+  .formkit-form[data-uid="50858b9710"] [data-style="minimal"] {
+    padding: 0 !important;
+    background: transparent !important;
   }
-  .waitlist-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
-  .waitlist-form input[type="email"]:focus { border-color: #FFFFFF; }
-  .waitlist-form button {
-    background: #FFFFFF;
-    color: #000000;
-    border: none;
-    border-radius: 4px;
-    padding: 14px 22px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: transform 180ms ease, filter 180ms ease;
+  .formkit-form[data-uid="50858b9710"] .formkit-fields {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  .waitlist-form button:hover { transform: scale(1.02); filter: brightness(0.92); }
-  .waitlist-form button:active { transform: scale(0.99); }
-  .waitlist-form button:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  .form-error {
-    margin-top: 14px;
-    color: rgba(255,255,255,0.7);
-    font-size: 14px;
-    min-height: 20px;
+  .formkit-form[data-uid="50858b9710"] .formkit-field {
+    flex: 1 1 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-width: 0 !important;
   }
-  .form-success {
-    font-size: 17px;
-    opacity: 0.85;
-    max-width: 520px;
-    margin: 0 auto;
+  .formkit-form[data-uid="50858b9710"] .formkit-input {
+    width: 100% !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 12px !important;
+    padding: 14px 16px !important;
+    color: #FFFFFF !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: border-color 200ms ease !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-input::placeholder {
+    color: rgba(255,255,255,0.4) !important;
+    opacity: 1 !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-input:focus {
+    border-color: #FFFFFF !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-submit {
+    flex: 0 0 auto !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    padding: 14px 22px !important;
+    margin: 0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+    min-height: auto !important;
+    line-height: 1 !important;
+    transition: transform 180ms ease, filter 180ms ease !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-submit > span {
+    color: #000000 !important;
+    font-weight: 500 !important;
+    position: static !important;
+    padding: 0 !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-submit:hover {
+    transform: scale(1.02) !important;
+    filter: brightness(0.92) !important;
+    background: #FFFFFF !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-submit:active {
+    transform: scale(0.99) !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-submit:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+  }
+  /* Spinner shown while submitting — keep minimal so it doesn't blow out the button */
+  .formkit-form[data-uid="50858b9710"] .formkit-spinner {
+    background: transparent !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-spinner > div {
+    background-color: #000 !important;
+  }
+  /* Hide "Built with Kit" footer */
+  .formkit-form[data-uid="50858b9710"] .formkit-powered-by-convertkit-container,
+  .formkit-form[data-uid="50858b9710"] .formkit-powered-by,
+  .formkit-form[data-uid="50858b9710"] [data-element="powered-by"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* Inline error alert */
+  .formkit-form[data-uid="50858b9710"] .formkit-alert {
+    list-style: none !important;
+    margin: 14px 0 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    color: rgba(255,255,255,0.75) !important;
+    font-size: 14px !important;
+    text-align: left !important;
+  }
+  .formkit-form[data-uid="50858b9710"] .formkit-alert-error {
+    color: rgba(255,255,255,0.85) !important;
+  }
+  /* Success message — Kit replaces .formkit-fields with a div.formkit-alert.formkit-alert-success
+     (also has data-element="success"). We restyle it to white Playfair, centered. */
+  .formkit-form[data-uid="50858b9710"] .formkit-alert-success,
+  .formkit-form[data-uid="50858b9710"] [data-element="success"],
+  .formkit-form[data-uid="50858b9710"] .formkit-message,
+  .formkit-form[data-uid="50858b9710"] .seva-success-message {
+    display: block !important;
+    list-style: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #FFFFFF !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 22px !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    letter-spacing: -0.01em !important;
+    text-align: center !important;
+    opacity: 0.95 !important;
   }
 
   @media (max-width: 540px) {
-    .waitlist-form { flex-direction: column; }
-    .waitlist-form button { width: 100%; }
+    .formkit-form[data-uid="50858b9710"] .formkit-fields {
+      flex-direction: column !important;
+    }
+    .formkit-form[data-uid="50858b9710"] .formkit-submit {
+      width: 100% !important;
+    }
   }
 
   /* Philosophy */
@@ -514,16 +615,30 @@
     <p class="subhead">We're building the goal completion app that respects your time. Join the waitlist.</p>
 
     <div class="form-wrap">
-      <form class="waitlist-form"
-            data-form="hero"
-            action="https://app.kit.com/forms/9423654/subscriptions"
+      <form action="https://app.kit.com/forms/9423654/subscriptions"
+            class="seva-form formkit-form"
             method="post"
-            target="kit_target"
-            novalidate>
-        <input type="email" name="email_address" required autocomplete="email" placeholder="you@example.com" aria-label="Email address" />
-        <button type="submit">Join the waitlist</button>
+            data-sv-form="9423654"
+            data-uid="50858b9710"
+            data-format="inline"
+            data-version="5"
+            min-width="400 500 600 700 800">
+        <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
+          <div class="formkit-field">
+            <input class="formkit-input"
+                   aria-label="Email address"
+                   name="email_address"
+                   placeholder="you@example.com"
+                   required
+                   type="email" />
+          </div>
+          <button data-element="submit" class="formkit-submit formkit-submit">
+            <div class="formkit-spinner"><div></div><div></div><div></div></div>
+            <span>Join the waitlist</span>
+          </button>
+        </div>
+        <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
       </form>
-      <div class="form-error" data-error="hero" aria-live="polite"></div>
     </div>
   </div>
 </section>
@@ -660,16 +775,30 @@
   <div class="container">
     <h2 class="reveal">Be first in line.</h2>
     <div class="reveal" style="max-width:520px; margin: 0 auto;">
-      <form class="waitlist-form"
-            data-form="final"
-            action="https://app.kit.com/forms/9423654/subscriptions"
+      <form action="https://app.kit.com/forms/9423654/subscriptions"
+            class="seva-form formkit-form"
             method="post"
-            target="kit_target"
-            novalidate>
-        <input type="email" name="email_address" required autocomplete="email" placeholder="you@example.com" aria-label="Email address" />
-        <button type="submit">Join the waitlist</button>
+            data-sv-form="9423654"
+            data-uid="50858b9710"
+            data-format="inline"
+            data-version="5"
+            min-width="400 500 600 700 800">
+        <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
+          <div class="formkit-field">
+            <input class="formkit-input"
+                   aria-label="Email address"
+                   name="email_address"
+                   placeholder="you@example.com"
+                   required
+                   type="email" />
+          </div>
+          <button data-element="submit" class="formkit-submit formkit-submit">
+            <div class="formkit-spinner"><div></div><div></div><div></div></div>
+            <span>Join the waitlist</span>
+          </button>
+        </div>
+        <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
       </form>
-      <div class="form-error" data-error="final" aria-live="polite"></div>
     </div>
   </div>
 </section>
@@ -696,9 +825,6 @@
   </div>
 </footer>
 
-<!-- Hidden iframe target — Kit's hosted form submits into this so the page doesn't navigate -->
-<iframe name="kit_target" class="kit-iframe" aria-hidden="true" tabindex="-1"></iframe>
-
 <script>
   // Reveal on scroll
   const io = new IntersectionObserver((entries) => {
@@ -711,80 +837,34 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-  // Waitlist forms submit natively to Kit's hosted endpoint (form action),
-  // targeted at a hidden iframe so the page doesn't navigate.
-  // Form ID 9423654 is Kit's internal numeric ID extracted from the embed script.
-  // Public UID is 50858b9710 — that does NOT work as an endpoint path.
-
+  // Override Kit's default success message text after subscription.
+  // Kit replaces the form (or its inner content) with a .formkit-message element
+  // containing "Success! Now check your email to confirm your subscription."
+  // — we swap that text for our brand copy.
   const SUCCESS_TEXT = "You're on the list. We'll let you know when we launch.";
-  const SUBMIT_TIMEOUT_MS = 8000;
-
-  let pendingForm = null;
-  let pendingTimer = null;
-
-  function showSuccess(formEl) {
-    const wrap = formEl.parentElement;
-    const errorEl = wrap.querySelector('.form-error');
-    if (errorEl) errorEl.textContent = '';
-    const msg = document.createElement('p');
-    msg.className = 'form-success';
-    msg.textContent = SUCCESS_TEXT;
-    formEl.replaceWith(msg);
-  }
-
-  function showError(formEl, message) {
-    const wrap = formEl.parentElement;
-    const errorEl = wrap.querySelector('.form-error');
-    if (errorEl) errorEl.textContent = message || 'Something went wrong. Please try again.';
-    const button = formEl.querySelector('button');
-    if (button) {
-      button.disabled = false;
-      button.textContent = button.dataset.originalLabel || 'Join the waitlist';
+  function rewriteSuccess(node) {
+    const candidates = [];
+    if (node.matches && node.matches('.formkit-message, .seva-success-message, [data-element="success"]')) {
+      candidates.push(node);
     }
+    if (node.querySelectorAll) {
+      node.querySelectorAll('.formkit-message, .seva-success-message, [data-element="success"]').forEach((el) => candidates.push(el));
+    }
+    candidates.forEach((el) => {
+      if (el.dataset.ppRewritten === '1') return;
+      if (!el.textContent.trim()) return;
+      el.textContent = SUCCESS_TEXT;
+      el.dataset.ppRewritten = '1';
+    });
   }
-
-  const iframe = document.querySelector('iframe[name="kit_target"]');
-  iframe.addEventListener('load', () => {
-    // First load is the initial empty document — ignore it.
-    // Subsequent loads happen after a real form submission to Kit.
-    if (!pendingForm) return;
-    const form = pendingForm;
-    pendingForm = null;
-    if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
-    showSuccess(form);
-  });
-
-  document.querySelectorAll('.waitlist-form').forEach((form) => {
-    form.addEventListener('submit', (e) => {
-      const input = form.querySelector('input[type="email"]');
-      const button = form.querySelector('button');
-      const email = (input.value || '').trim();
-
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        e.preventDefault();
-        showError(form, 'Please enter a valid email.');
-        return;
-      }
-
-      // Don't preventDefault — let the browser submit the form natively
-      // to the Kit endpoint, into the hidden iframe target.
-      button.dataset.originalLabel = button.textContent;
-      button.disabled = true;
-      button.textContent = 'Joining…';
-      pendingForm = form;
-
-      // Safety net: if the iframe load doesn't fire within timeout
-      // (network failure, blocked, etc.), surface an error.
-      if (pendingTimer) clearTimeout(pendingTimer);
-      pendingTimer = setTimeout(() => {
-        if (!pendingForm) return;
-        const f = pendingForm;
-        pendingForm = null;
-        pendingTimer = null;
-        showError(f, 'Something went wrong. Please try again.');
-      }, SUBMIT_TIMEOUT_MS);
+  const successObserver = new MutationObserver((mutations) => {
+    mutations.forEach((m) => {
+      m.addedNodes && m.addedNodes.forEach((n) => {
+        if (n.nodeType === 1) rewriteSuccess(n);
+      });
     });
   });
+  successObserver.observe(document.body, { childList: true, subtree: true });
 </script>
 
 </body>

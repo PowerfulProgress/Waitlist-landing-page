@@ -5,884 +5,367 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Powerful Progress — Goals with endpoints</title>
 <meta name="description" content="The goal completion app that respects your time. Join the waitlist." />
-
-<meta property="og:type" content="website" />
 <meta property="og:title" content="Powerful Progress — Goals with endpoints" />
 <meta property="og:description" content="The goal completion app that respects your time. Join the waitlist." />
-<meta property="og:site_name" content="Powerful Progress" />
-
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Powerful Progress — Goals with endpoints" />
-<meta name="twitter:description" content="The goal completion app that respects your time. Join the waitlist." />
-
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><circle cx='60' cy='60' r='59' fill='%23000' stroke='%23fff' stroke-width='2'/><text x='60' y='44' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-family='Georgia,serif' font-size='22' font-weight='400'>Powerful</text><line x1='25' y1='60' x2='95' y2='60' stroke='%23fff' stroke-width='2'/><text x='60' y='78' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-family='Georgia,serif' font-size='22' font-weight='400'>Progress</text></svg>" />
-
+<meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet" />
-
-<!-- Kit (ConvertKit) embed — loads ck.5.js which attaches submit handlers
-     (with reCAPTCHA/anti-spam token) to any <form data-sv-form="..."> on the page.
-     data-uid is intentionally omitted so the bundle doesn't replace this script
-     tag with a form in <head>; the visible forms are pre-rendered in <body>. -->
-<script async src="https://powerfulprogress.kit.com/50858b9710/index.js"></script>
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 <style>
-  *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: #000000;
-    color: #FFFFFF;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+  :root{
+    --bg:#000000;
+    --text:#ffffff;
+    --muted:#a3a3aa;
+    --dim:#6e6e76;
+    --card:#0c0c0d;
+    --card-line:#1f1f22;
+    --line:#1c1c1f;
+    --chip-line:#2c2c30;
+    --green:#5fd17f;
+    --green-bg:rgba(95,209,127,.13);
+    --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --maxw:1080px;
   }
-  h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; margin: 0; line-height: 1.15; letter-spacing: -0.01em; }
-  h1 { letter-spacing: -0.02em; }
-  p { margin: 0; }
-  a { color: inherit; text-decoration: none; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:var(--serif)}
+  .muted{color:var(--muted)}
 
+  /* scroll reveal */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* Sections */
-  section { padding: 48px 0; }
-  @media (max-width: 768px) {
-    section { padding: 32px 0; }
-  }
-  /* Internal breathing room above each section heading */
-  .philosophy h2,
-  .preview h2,
-  .how h2,
-  .final h2 {
-    padding-top: 40px;
-  }
-  @media (max-width: 768px) {
-    .philosophy h2,
-    .preview h2,
-    .how h2,
-    .final h2 {
-      padding-top: 24px;
-    }
-  }
-
-  /* Reveal on scroll — only when the user hasn't asked for reduced motion.
-     Without no-preference, .reveal elements stay at their natural opacity/position,
-     so motion-sensitive users see the page immediately, fully rendered. */
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-    /* Cascade the three mockups and three how-it-works steps */
-    .mockups .reveal:nth-child(2) { transition-delay: 100ms; }
-    .mockups .reveal:nth-child(3) { transition-delay: 200ms; }
-    .steps .reveal:nth-child(2) { transition-delay: 100ms; }
-    .steps .reveal:nth-child(3) { transition-delay: 200ms; }
-  }
-
-  /* Logo */
-  .logo {
-    display: inline-block;
-    line-height: 0;
-  }
+  /* EMBLEM */
+  .emblem{width:96px;height:96px;border-radius:50%;border:1.4px solid #fff;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--serif);line-height:1.05;gap:5px}
+  .emblem span{font-size:15px;letter-spacing:.01em}
+  .emblem .em-line{display:block;width:46px;height:1px;background:#fff;opacity:.85}
+  .emblem.small{width:60px;height:60px;gap:3px}
+  .emblem.small span{font-size:10px}
+  .emblem.small .em-line{width:28px}
 
   /* HERO */
-  .hero {
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 64px 24px;
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-  }
-  @media (max-width: 768px) {
-    .hero { min-height: 85vh; padding: 56px 24px; }
-  }
-  .hero-spotlight {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 800px 600px at 50% 18%, rgba(255,255,255,0.14), rgba(255,255,255,0) 70%),
-      radial-gradient(ellipse 700px 500px at 58% 88%, rgba(255,255,255,0.10), rgba(255,255,255,0) 72%);
-  }
-  .hero > * { position: relative; z-index: 1; }
-  .hero-stack {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 720px;
-  }
-  .hero-stack .logo { margin: 0 0 24px; line-height: 0; }
-  .hero h1 {
-    font-size: 44px;
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin: 0 0 16px;
-    text-align: center;
-  }
-  .hero h1 .line { display: block; }
-  .hero .subhead {
-    font-size: 18px;
-    opacity: 0.7;
-    max-width: 560px;
-    margin: 0 0 28px;
-    line-height: 1.5;
-    text-align: center;
-  }
-  .hero .form-wrap { width: 100%; max-width: 520px; margin: 0; }
-  @media (max-width: 768px) {
-    .hero h1 { font-size: 28px; }
-    .hero .subhead { font-size: 16px; }
-    .hero-stack .logo { margin-bottom: 20px; }
-  }
+  header.hero{text-align:center;padding:64px 0 88px}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.6vw,50px);line-height:1.15;letter-spacing:-0.005em;margin:40px 0 0}
+  .hero p.lead{max-width:560px;margin:26px auto 0;font-size:19px;color:var(--muted)}
 
-  /* Kit (ConvertKit) form — overrides scoped to our form's data-uid.
-     The embed script renders form HTML with .formkit-* classes; we restyle
-     them to match the brand without touching submission logic. */
-  .formkit-form[data-uid="50858b9710"] {
-    background: transparent !important;
-    background-color: transparent !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    width: 100% !important;
-    max-width: 520px !important;
-    box-shadow: none !important;
-    border: 0 !important;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-  }
-  .formkit-form[data-uid="50858b9710"] [data-style="clean"],
-  .formkit-form[data-uid="50858b9710"] [data-style="full"],
-  .formkit-form[data-uid="50858b9710"] [data-style="minimal"] {
-    padding: 0 !important;
-    background: transparent !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-fields {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: 10px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-field {
-    flex: 1 1 auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    min-width: 0 !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-input {
-    width: 100% !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    border-radius: 12px !important;
-    padding: 14px 16px !important;
-    color: #FFFFFF !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 400 !important;
-    outline: none !important;
-    box-shadow: none !important;
-    transition: border-color 200ms ease !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-input::placeholder {
-    color: rgba(255,255,255,0.4) !important;
-    opacity: 1 !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-input:focus {
-    border-color: #FFFFFF !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-submit {
-    flex: 0 0 auto !important;
-    background: #FFFFFF !important;
-    background-color: #FFFFFF !important;
-    color: #000000 !important;
-    border: 0 !important;
-    border-radius: 12px !important;
-    padding: 14px 22px !important;
-    margin: 0 !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 500 !important;
-    cursor: pointer !important;
-    white-space: nowrap !important;
-    box-shadow: none !important;
-    min-height: auto !important;
-    line-height: 1 !important;
-    transition: transform 180ms ease, filter 180ms ease !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-submit > span {
-    color: #000000 !important;
-    font-weight: 500 !important;
-    position: static !important;
-    padding: 0 !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-submit:hover {
-    transform: scale(1.02) !important;
-    filter: brightness(0.92) !important;
-    background: #FFFFFF !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-submit:active {
-    transform: scale(0.99) !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-submit:disabled {
-    opacity: 0.6 !important;
-    cursor: not-allowed !important;
-  }
-  /* Spinner shown while submitting — keep minimal so it doesn't blow out the button */
-  .formkit-form[data-uid="50858b9710"] .formkit-spinner {
-    background: transparent !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-spinner > div {
-    background-color: #000 !important;
-  }
-  /* Hide "Built with Kit" footer */
-  .formkit-form[data-uid="50858b9710"] .formkit-powered-by-convertkit-container,
-  .formkit-form[data-uid="50858b9710"] .formkit-powered-by,
-  .formkit-form[data-uid="50858b9710"] [data-element="powered-by"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  /* Inline error alert */
-  .formkit-form[data-uid="50858b9710"] .formkit-alert {
-    list-style: none !important;
-    margin: 14px 0 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    color: rgba(255,255,255,0.75) !important;
-    font-size: 14px !important;
-    text-align: left !important;
-  }
-  .formkit-form[data-uid="50858b9710"] .formkit-alert-error {
-    color: rgba(255,255,255,0.85) !important;
-  }
-  /* Success message — Kit replaces .formkit-fields with a div.formkit-alert.formkit-alert-success
-     (also has data-element="success"). We restyle it to white Playfair, centered. */
-  .formkit-form[data-uid="50858b9710"] .formkit-alert-success,
-  .formkit-form[data-uid="50858b9710"] [data-element="success"],
-  .formkit-form[data-uid="50858b9710"] .formkit-message,
-  .formkit-form[data-uid="50858b9710"] .seva-success-message {
-    display: block !important;
-    list-style: none !important;
-    background: transparent !important;
-    border: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    color: #FFFFFF !important;
-    font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: 22px !important;
-    font-weight: 400 !important;
-    line-height: 1.4 !important;
-    letter-spacing: -0.01em !important;
-    text-align: center !important;
-    opacity: 0.95 !important;
-  }
+  /* FORM */
+  .signup{max-width:600px;margin:38px auto 0}
+  .signup form{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .signup input[type=email]{flex:1;min-width:240px;background:#070707;border:1px solid var(--chip-line);color:var(--text);font-size:16px;padding:16px 20px;border-radius:14px;outline:none;font-family:var(--sans);transition:border .15s ease}
+  .signup input[type=email]::placeholder{color:var(--dim)}
+  .signup input[type=email]:focus{border-color:#48484e}
+  .btn{display:inline-block;font-weight:600;font-size:16px;padding:16px 28px;border-radius:14px;cursor:pointer;border:none;font-family:var(--sans);transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease}
+  .btn-primary{background:#fff;color:#000;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .scarcity{margin-top:18px;font-size:14px;color:var(--muted);display:inline-flex;align-items:center;gap:9px}
+  .scarcity .gdot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  .formMsg{margin-top:12px;font-size:15px;font-weight:600;color:#fff}
+  .formMsg:empty{display:none;margin:0}
+  .micro{margin-top:12px;font-size:13.5px;color:var(--dim)}
+  .social-proof{margin-top:30px;font-size:14px;color:var(--muted)}
+  .social-proof strong{color:#fff;font-weight:600}
 
-  @media (max-width: 540px) {
-    .formkit-form[data-uid="50858b9710"] .formkit-fields {
-      flex-direction: column !important;
-    }
-    .formkit-form[data-uid="50858b9710"] .formkit-submit {
-      width: 100% !important;
-    }
-  }
+  /* SECTIONS */
+  section{padding:90px 0}
+  h2.title{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.8vw,50px);letter-spacing:-0.005em;line-height:1.12}
 
-  /* Philosophy */
-  .philosophy { text-align: left; }
-  .philosophy .container { max-width: 720px; }
-  .philosophy h2 {
-    font-size: 40px;
-    margin-bottom: 32px;
-    max-width: 720px;
-  }
-  .philosophy .paragraphs {
-    max-width: 720px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .philosophy p {
-    font-size: 16px;
-    opacity: 0.8;
-    line-height: 1.7;
-  }
-  @media (max-width: 768px) {
-    .philosophy h2 { font-size: 32px; }
-  }
+  /* WHY */
+  .why .wrap{max-width:820px}
+  .why h2{margin-bottom:34px}
+  .why p{font-size:19px;color:#e7e7ea;margin-bottom:22px;max-width:680px}
+  .why .em-strong{color:#fff}
 
-  /* Preview */
-  .preview h2 {
-    font-size: 40px;
-    margin-bottom: 64px;
-    text-align: center;
-  }
-  .mockups {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-  }
-  .mockup-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-  }
-  .phone {
-    width: 100%;
-    max-width: 238px;
-    aspect-ratio: 9 / 19;
-    background: #000;
-    border: 0.5px solid rgba(255,255,255,0.18);
-    border-radius: 22px;
-    padding: 16px 14px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-  }
-  .phone::before {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 5px;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.15);
-  }
-  .mockup-caption {
-    font-size: 13px;
-    opacity: 0.6;
-    text-align: center;
-    max-width: 240px;
-    line-height: 1.5;
-  }
-  @media (max-width: 900px) {
-    .mockups { grid-template-columns: 1fr; gap: 56px; }
-    .preview h2 { font-size: 32px; }
-  }
+  /* PREVIEW */
+  .preview{text-align:center}
+  .preview h2{margin-bottom:14px}
+  .preview .sub{max-width:560px;margin:0 auto;color:var(--muted)}
+  .phones{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:56px}
+  .phone-col{width:268px}
+  .phone{background:#070708;border:1px solid var(--card-line);border-radius:34px;padding:14px;box-shadow:0 30px 70px rgba(0,0,0,.7)}
+  .screen{background:#000;border-radius:24px;padding:20px 18px;min-height:460px;display:flex;flex-direction:column;text-align:left}
+  .statusbar{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:22px}
+  .scr-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .scr-goal{font-family:var(--serif);font-size:23px;font-weight:600;line-height:1.15;margin-bottom:16px}
+  .bignum{font-family:var(--serif);font-size:54px;font-weight:600;line-height:1}
+  .bignum sup{font-size:24px;vertical-align:super;margin-left:1px}
+  .dayline{font-size:13px;color:var(--muted);margin:6px 0 14px}
+  .pbar{height:3px;background:#222226;border-radius:2px;overflow:hidden;margin-bottom:18px}
+  .pbar > i{display:block;height:100%;background:#fff;border-radius:2px}
+  .badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px}
+  .badge .bdot{width:6px;height:6px;border-radius:50%}
+  .badge-green{background:var(--green-bg);color:var(--green)}
+  .badge-green .bdot{background:var(--green)}
+  .badge-neutral{background:#161618;color:#bcbcc2;border:1px solid #26262a}
+  .badge-neutral .bdot{background:#8a8a90}
+  .statbox-row{display:flex;gap:12px;margin-top:22px}
+  .statbox{flex:1;border:1px solid var(--card-line);border-radius:14px;padding:14px}
+  .statbox b{font-family:var(--serif);font-size:26px;font-weight:600;display:block;line-height:1}
+  .statbox small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:block;margin-top:6px}
+  .endtag{margin-top:auto;font-size:13px;color:var(--muted);padding-top:22px}
+  .datebox{border:1px solid var(--chip-line);border-radius:12px;padding:14px 16px;font-size:15px;color:#fff;margin-bottom:18px}
+  .chips{display:flex;gap:9px;flex-wrap:wrap}
+  .chip{font-size:13px;padding:9px 14px;border-radius:999px;border:1px solid var(--chip-line);color:var(--muted)}
+  .chip.active{background:#fff;color:#000;border-color:#fff;font-weight:600}
+  .screen .btn{width:100%;text-align:center;margin-top:auto;padding:14px;font-size:15px}
+  .goalcard{border:1px solid var(--card-line);border-radius:16px;padding:16px;margin-bottom:14px}
+  .goalcard .gtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .goalcard .gname{font-family:var(--serif);font-size:17px;font-weight:600;line-height:1.2}
+  .phone-cap{text-align:center;font-size:14px;color:var(--muted);margin-top:20px;line-height:1.5}
 
-  /* Phone screen content */
-  .screen {
-    flex: 1;
-    margin-top: 22px;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    font-size: 11px;
-  }
-  .screen .top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 10px;
-    opacity: 0.55;
-    margin-bottom: 18px;
-  }
-  .screen .label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.5;
-  }
-  .screen h4 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 400;
-    font-size: 17px;
-    margin: 6px 0 0;
-    line-height: 1.25;
-  }
-  .pct {
-    font-family: 'Playfair Display', serif;
-    font-size: 56px;
-    line-height: 1;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-  }
-  .day-line { font-size: 11px; opacity: 0.6; margin-top: 4px; }
-  .progress-bar {
-    width: 100%;
-    height: 2px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 1px;
-    margin-top: 14px;
-    overflow: hidden;
-  }
-  .progress-bar > span {
-    display: block;
-    height: 100%;
-    background: #FFFFFF;
-  }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 10px;
-    font-weight: 500;
-  }
-  .badge.green {
-    background: rgba(74, 222, 128, 0.12);
-    color: #4ADE80;
-    border: 0.5px solid rgba(74, 222, 128, 0.3);
-  }
-  .badge.subtle {
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.7);
-    border: 0.5px solid rgba(255,255,255,0.12);
-  }
-  .badge .dot {
-    width: 5px; height: 5px; border-radius: 50%; background: currentColor;
-  }
-  .pill-row { display: flex; gap: 8px; margin-top: 14px; }
-  .pill {
-    flex: 1;
-    border: 0.5px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    padding: 8px 10px;
-  }
-  .pill .v { font-family: 'Playfair Display', serif; font-size: 16px; }
-  .pill .k { font-size: 9px; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
-  .showed-up {
-    margin-top: auto;
-    font-size: 11px;
-    opacity: 0.6;
-    line-height: 1.5;
-    border-top: 0.5px solid rgba(255,255,255,0.08);
-    padding-top: 12px;
-  }
+  /* HOW */
+  .how{text-align:center}
+  .how h2{margin-bottom:56px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;text-align:left}
+  .step .num{font-family:var(--serif);font-size:52px;font-weight:600;color:#3a3a3f;line-height:1;margin-bottom:18px}
+  .step h3{font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em}
+  .step p{font-size:15.5px;color:var(--muted)}
 
-  /* Create goal mockup */
-  .step-indicator { font-size: 10px; opacity: 0.5; letter-spacing: 0.08em; text-transform: uppercase; }
-  .question {
-    font-family: 'Playfair Display', serif;
-    font-size: 19px;
-    margin-top: 10px;
-    line-height: 1.25;
-  }
-  .input-field {
-    margin-top: 18px;
-    border: 0.5px solid rgba(255,255,255,0.18);
-    border-radius: 8px;
-    padding: 11px 12px;
-    font-size: 12px;
-    background: rgba(255,255,255,0.02);
-  }
-  .chips { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
-  .chip {
-    border: 0.5px solid rgba(255,255,255,0.15);
-    border-radius: 999px;
-    padding: 6px 10px;
-    font-size: 10px;
-    opacity: 0.75;
-  }
-  .chip.active {
-    border-color: rgba(255,255,255,0.5);
-    background: rgba(255,255,255,0.06);
-    opacity: 1;
-  }
-  .cta {
-    margin-top: auto;
-    background: #fff;
-    color: #000;
-    text-align: center;
-    border-radius: 10px;
-    padding: 11px;
-    font-weight: 500;
-    font-size: 12px;
-  }
+  /* FOUNDING */
+  .founding{text-align:center;border-top:1px solid var(--line)}
+  .founding .wrap{max-width:720px}
+  .founding h2{margin-bottom:20px}
+  .founding p.intro{font-size:19px;color:#e7e7ea;max-width:600px;margin:0 auto}
+  .founding ul{list-style:none;max-width:440px;margin:30px auto 30px;text-align:left}
+  .founding li{display:flex;gap:13px;align-items:flex-start;font-size:16.5px;color:#e7e7ea;padding:11px 0;border-bottom:1px solid var(--line)}
+  .founding li:last-child{border-bottom:none}
+  .founding li .ar{color:#fff;flex-shrink:0}
+  .founding .note{font-size:15px;color:var(--muted);margin-bottom:28px}
 
-  /* All goals mockup */
-  .goal-card {
-    border: 0.5px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 14px;
-    margin-top: 12px;
-    background: rgba(255,255,255,0.015);
-  }
-  .goal-card:first-of-type { margin-top: 18px; }
-  .goal-card .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-  .goal-card .title { font-family: 'Playfair Display', serif; font-size: 14px; line-height: 1.25; }
-  .goal-card .pct-sm { font-family: 'Playfair Display', serif; font-size: 22px; line-height: 1; margin-top: 8px; }
-  .goal-card .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
-  .goal-card .meta .day-line { margin-top: 0; font-size: 10px; }
+  /* FAQ */
+  .faq .wrap{max-width:720px}
+  .faq h2{text-align:center;margin-bottom:44px}
+  details{border-bottom:1px solid var(--line);padding:22px 0}
+  details summary{font-size:18px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  details summary::-webkit-details-marker{display:none}
+  details summary .plus{color:var(--muted);font-size:26px;line-height:1;transition:transform .2s ease}
+  details[open] summary .plus{transform:rotate(45deg);color:#fff}
+  details p{margin-top:14px;color:var(--muted);font-size:16px}
 
-  /* How it works */
-  .how h2 {
-    font-size: 40px;
-    margin-bottom: 64px;
-    text-align: center;
-  }
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 48px;
-  }
-  .step .num {
-    font-family: 'Playfair Display', serif;
-    font-size: 64px;
-    line-height: 1;
-    opacity: 0.3;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .step .title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 17px;
-    margin-bottom: 8px;
-  }
-  .step .desc {
-    font-size: 15px;
-    opacity: 0.7;
-    line-height: 1.6;
-  }
-  @media (max-width: 768px) {
-    .steps { grid-template-columns: 1fr; gap: 40px; }
-    .how h2 { font-size: 32px; }
-  }
+  /* FINAL */
+  .final{text-align:center}
+  .final h2{margin-bottom:34px}
 
-  /* Final CTA */
-  .final { text-align: center; }
-  .final h2 {
-    font-size: 56px;
-    margin-bottom: 40px;
-  }
-  @media (max-width: 768px) {
-    .final h2 { font-size: 36px; }
-  }
+  footer{padding:56px 0 48px;text-align:center;border-top:1px solid var(--line)}
+  .foot-copy{margin-top:18px;color:var(--dim);font-size:13.5px}
+  .foot-links{margin-top:12px;font-size:14px}
+  .foot-links a{color:var(--muted);margin:0 8px}
+  .foot-links a:hover{color:#fff}
 
-  /* Footer */
-  footer {
-    padding: 32px 24px 48px;
-    text-align: center;
-    color: rgba(255,255,255,0.4);
-    font-size: 13px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+  @media(max-width:760px){
+    .steps{grid-template-columns:1fr;gap:40px}
+    section{padding:64px 0}
   }
-  @media (max-width: 768px) {
-    footer { padding: 24px 24px 40px; }
-  }
-  footer .footer-logo { opacity: 0.5; }
-  footer a { transition: opacity 200ms ease; }
-  footer a:hover { opacity: 0.9; }
-  footer .row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  /* Selection */
-  ::selection { background: #fff; color: #000; }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-spotlight" aria-hidden="true"></div>
-  <div class="hero-stack">
-    <a href="#hero" class="logo" aria-label="Powerful Progress">
-      <svg width="96" height="96" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Powerful Progress logo">
-        <circle cx="60" cy="60" r="59" fill="#000" stroke="#FFFFFF" stroke-width="2" />
-        <text x="60" y="44" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="400" letter-spacing="-0.01em">Powerful</text>
-        <line x1="25" y1="60" x2="95" y2="60" stroke="#FFFFFF" stroke-width="2" stroke-linecap="butt" />
-        <text x="60" y="78" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="400" letter-spacing="-0.01em">Progress</text>
-      </svg>
-    </a>
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="emblem"><span>Powerful</span><span class="em-line"></span><span>Progress</span></div>
+    <h1>Goals with endpoints.<br>Action over information.</h1>
+    <p class="lead">We're building the goal completion app that respects your time. Join the waitlist.</p>
 
-    <h1>
-      <span class="line">Goals with endpoints.</span>
-      <span class="line">Action over information.</span>
-    </h1>
-
-    <p class="subhead">We're building the goal completion app that respects your time. Join the waitlist.</p>
-
-    <div class="form-wrap">
-      <form action="https://app.kit.com/forms/9423654/subscriptions"
-            class="seva-form formkit-form"
-            method="post"
-            data-sv-form="9423654"
-            data-uid="50858b9710"
-            data-format="inline"
-            data-version="5"
-            min-width="400 500 600 700 800">
-        <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
-          <div class="formkit-field">
-            <input class="formkit-input"
-                   aria-label="Email address"
-                   name="email_address"
-                   placeholder="you@example.com"
-                   required
-                   type="email" />
-          </div>
-          <button data-element="submit" class="formkit-submit formkit-submit">
-            <div class="formkit-spinner"><div></div><div></div><div></div></div>
-            <span>Join the waitlist</span>
-          </button>
-        </div>
-        <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+    <div class="signup" id="join">
+      <!-- Live Kit form (ID 9423654). ck.5.js at the bottom enables inline submit. -->
+      <form action="https://app.kit.com/forms/9423654/subscriptions" method="post" data-sv-form="9423654" data-uid="50858b9710" data-format="inline" data-version="5" id="waitlistForm">
+        <input type="email" name="email_address" placeholder="you@example.com" required aria-label="Email address" />
+        <button type="submit" class="btn btn-primary" data-element="submit">Join the waitlist</button>
       </form>
+      <div class="scarcity"><span class="gdot"></span> First 100 lock in lifetime at our lowest price ever. No spam.</div>
+      <div class="formMsg" id="formMsg" role="status"></div>
+      <p class="social-proof">Built in public for <strong>200,000+</strong> across TikTok, Instagram &amp; YouTube</p>
     </div>
+  </div>
+</header>
+
+<section class="why reveal">
+  <div class="wrap">
+    <h2 class="title">Why we're building this</h2>
+    <p>Most goal apps confuse activity with progress. They count check-ins, log streaks, and reward the act of opening the app. Time passes. The goal doesn't move.</p>
+    <p>They reward showing up, not finishing. <span class="em-strong">Habits are not goals. Streaks are not outcomes.</span> A perfect 365-day streak with nothing completed is a beautifully decorated treadmill.</p>
+    <p>Powerful Progress will track completion, not consistency. You'll set a goal with a deadline. Get the smallest action that moves it forward today. The math will take care of itself — you'll take care of the work.</p>
   </div>
 </section>
 
-<!-- PHILOSOPHY -->
-<section class="philosophy">
-  <div class="container">
-    <h2 class="reveal">Why we're building this</h2>
-    <div class="paragraphs">
-      <p class="reveal">Most goal apps confuse activity with progress. They count check-ins, log streaks, and reward the act of opening the app. Time passes. The goal doesn't move.</p>
-      <p class="reveal">They reward showing up, not finishing. Habits are not goals. Streaks are not outcomes. A perfect 365-day streak with nothing completed is a beautifully decorated treadmill.</p>
-      <p class="reveal">Powerful Progress will track completion, not consistency. You'll set a goal with a deadline. Get the smallest action that moves it forward today. The math will take care of itself — you'll take care of the work.</p>
-    </div>
-  </div>
-</section>
+<section class="preview reveal">
+  <div class="wrap">
+    <h2 class="title">Designed to finish</h2>
+    <p class="sub">One goal. One number. One question — did you do the work?</p>
 
-<!-- PREVIEW -->
-<section class="preview">
-  <div class="container">
-    <h2 class="reveal">Designed to finish</h2>
-
-    <div class="mockups">
-      <!-- Mockup 1: Today -->
-      <div class="mockup-wrap reveal">
+    <div class="phones">
+      <!-- Today -->
+      <div class="phone-col">
         <div class="phone">
           <div class="screen">
-            <div class="top-row">
-              <span>9:41</span>
-              <span>Today</span>
+            <div class="statusbar"><span>9:41</span><span>Today</span></div>
+            <div class="scr-label">Active goal</div>
+            <div class="scr-goal">Run a half marathon</div>
+            <div class="bignum">15<sup>%</sup></div>
+            <div class="dayline">Day 14 of 90</div>
+            <div class="pbar"><i style="width:15%"></i></div>
+            <div><span class="badge badge-green"><span class="bdot"></span> Done for today</span></div>
+            <div class="statbox-row">
+              <div class="statbox"><b>76</b><small>Days left</small></div>
+              <div class="statbox"><b>14</b><small>Days active</small></div>
             </div>
-            <span class="label">Active goal</span>
-            <h4>Run a half<br/>marathon</h4>
-            <div class="pct" style="margin-top:14px;">15%</div>
-            <div class="day-line">Day 14 of 90</div>
-            <div class="progress-bar"><span style="width:15%"></span></div>
-            <div style="margin-top:18px;">
-              <span class="badge green"><span class="dot"></span>Done for today</span>
-            </div>
-            <div class="pill-row">
-              <div class="pill"><div class="v">76</div><div class="k">Days left</div></div>
-              <div class="pill"><div class="v">14</div><div class="k">Days active</div></div>
-            </div>
-            <div class="showed-up">You showed up today.</div>
+            <div class="endtag">You showed up today.</div>
           </div>
         </div>
-        <div class="mockup-caption">The today screen will show one goal, one number, one question — did you do the work?</div>
+        <p class="phone-cap">The today screen will show one goal, one number, one question — did you do the work?</p>
       </div>
 
-      <!-- Mockup 2: Create -->
-      <div class="mockup-wrap reveal">
+      <!-- New goal -->
+      <div class="phone-col">
         <div class="phone">
           <div class="screen">
-            <div class="top-row">
-              <span>9:41</span>
-              <span>New goal</span>
-            </div>
-            <span class="step-indicator">Step 3 of 4</span>
-            <div class="question">Set your deadline</div>
-            <div class="input-field">1. august 2026</div>
+            <div class="statusbar"><span>9:41</span><span>New goal</span></div>
+            <div class="scr-label">Step 3 of 4</div>
+            <div class="scr-goal">Set your deadline</div>
+            <div class="datebox">1. august 2026</div>
             <div class="chips">
               <span class="chip">30 days</span>
               <span class="chip active">90 days</span>
               <span class="chip">6 months</span>
             </div>
-            <div class="cta">I'm ready to start →</div>
+            <button class="btn btn-primary">I'm ready to start →</button>
           </div>
         </div>
-        <div class="mockup-caption">Creating a goal. Four steps. Every goal must have an end date.</div>
+        <p class="phone-cap">Creating a goal. Four steps. Every goal must have an end date.</p>
       </div>
 
-      <!-- Mockup 3: All goals -->
-      <div class="mockup-wrap reveal">
+      <!-- All goals -->
+      <div class="phone-col">
         <div class="phone">
           <div class="screen">
-            <div class="top-row">
-              <span>9:41</span>
-              <span>All goals</span>
+            <div class="statusbar"><span>9:41</span><span>All goals</span></div>
+            <div class="scr-label">2 active</div>
+            <div class="goalcard">
+              <div class="gtop"><span class="gname">Run a half marathon</span><span class="badge badge-green"><span class="bdot"></span> Ahead</span></div>
+              <div class="bignum" style="font-size:38px">14<sup style="font-size:18px">%</sup></div>
+              <div class="dayline" style="margin:6px 0 10px">Day 14 of 90</div>
+              <div class="pbar"><i style="width:14%"></i></div>
             </div>
-            <span class="label">2 active</span>
-
-            <div class="goal-card">
-              <div class="row">
-                <div class="title">Run a half<br/>marathon</div>
-                <span class="badge green"><span class="dot"></span>Ahead</span>
-              </div>
-              <div class="pct-sm">14%</div>
-              <div class="progress-bar"><span style="width:14%"></span></div>
-              <div class="meta"><div class="day-line">Day 14 of 90</div></div>
-            </div>
-
-            <div class="goal-card">
-              <div class="row">
-                <div class="title">Read 12 books</div>
-                <span class="badge subtle"><span class="dot"></span>On track</span>
-              </div>
-              <div class="pct-sm">33%</div>
-              <div class="progress-bar"><span style="width:33%"></span></div>
-              <div class="meta"><div class="day-line">Day 121 of 365</div></div>
+            <div class="goalcard">
+              <div class="gtop"><span class="gname">Read 12 books</span><span class="badge badge-neutral"><span class="bdot"></span> On track</span></div>
+              <div class="bignum" style="font-size:38px">33<sup style="font-size:18px">%</sup></div>
+              <div class="dayline" style="margin:6px 0 10px">Day 121 of 365</div>
+              <div class="pbar"><i style="width:33%"></i></div>
             </div>
           </div>
         </div>
-        <div class="mockup-caption">Every goal in one place. Pace, not streaks. Honest status — no decoration.</div>
+        <p class="phone-cap">Every goal in one place. Pace, not streaks. Honest status — no decoration.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="how">
-  <div class="container">
-    <h2 class="reveal">How it works</h2>
+<section class="how reveal">
+  <div class="wrap">
+    <h2 class="title">How it works</h2>
     <div class="steps">
-      <div class="step reveal">
-        <span class="num">01</span>
-        <div class="title">Set a goal with a deadline</div>
-        <div class="desc">No vague intentions. Pick something real, give it an end date.</div>
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Set a goal with a deadline</h3>
+        <p>No vague intentions. Pick something real, give it an end date.</p>
       </div>
-      <div class="step reveal">
-        <span class="num">02</span>
-        <div class="title">Get your daily action</div>
-        <div class="desc">Powerful Progress generates one small step that moves the goal forward today.</div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Get your daily action</h3>
+        <p>Powerful Progress generates one small step that moves the goal forward today.</p>
       </div>
-      <div class="step reveal">
-        <span class="num">03</span>
-        <div class="title">Do the work</div>
-        <div class="desc">Check it off when it's done. The math takes care of itself.</div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Do the work</h3>
+        <p>Check it off when it's done. The math takes care of itself.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="final">
-  <div class="container">
-    <h2 class="reveal">Be first in line.</h2>
-    <div class="reveal" style="max-width:520px; margin: 0 auto;">
-      <form action="https://app.kit.com/forms/9423654/subscriptions"
-            class="seva-form formkit-form"
-            method="post"
-            data-sv-form="9423654"
-            data-uid="50858b9710"
-            data-format="inline"
-            data-version="5"
-            min-width="400 500 600 700 800">
-        <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
-          <div class="formkit-field">
-            <input class="formkit-input"
-                   aria-label="Email address"
-                   name="email_address"
-                   placeholder="you@example.com"
-                   required
-                   type="email" />
-          </div>
-          <button data-element="submit" class="formkit-submit formkit-submit">
-            <div class="formkit-spinner"><div></div><div></div><div></div></div>
-            <span>Join the waitlist</span>
-          </button>
-        </div>
-        <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+<section class="founding reveal">
+  <div class="wrap">
+    <h2 class="title">The first 100 get lifetime.</h2>
+    <p class="intro">Before launch, everyone on the waitlist gets the founding offer first: lifetime access at a very low one-time price — no subscription, ever. But only the first 100 people to claim it get the deal. Once those 100 spots are gone, the founding price is gone for good.</p>
+    <ul>
+      <li><span class="ar">→</span> Lifetime access for a single payment — never a subscription</li>
+      <li><span class="ar">→</span> The lowest price Powerful Progress will ever offer, locked in forever</li>
+      <li><span class="ar">→</span> A direct line to shape what gets built next</li>
+    </ul>
+    <p class="note">Joining the waitlist is free — the founding offer lands in your inbox before launch.</p>
+    <a href="#top" class="btn btn-primary">Reserve founding access</a>
+  </div>
+</section>
+
+<section class="faq reveal">
+  <div class="wrap">
+    <h2 class="title">Good to know</h2>
+    <details open>
+      <summary>What do I get for joining the waitlist? <span class="plus">+</span></summary>
+      <p>A founding spot: lifetime access at the lowest price Powerful Progress will ever offer, for the first 100 people only. One payment, no subscription, locked in forever.</p>
+    </details>
+    <details>
+      <summary>Does it cost anything to join? <span class="plus">+</span></summary>
+      <p>No. Joining the waitlist is completely free. You only decide whether to claim founding access when we launch.</p>
+    </details>
+    <details>
+      <summary>When does it launch? <span class="plus">+</span></summary>
+      <p>We're building in public and getting close. Join the waitlist and you'll be the first to know the exact date — and first in line for a founding lifetime spot.</p>
+    </details>
+    <details>
+      <summary>iPhone or Android? <span class="plus">+</span></summary>
+      <p>Powerful Progress is being built for both iOS and Android.</p>
+    </details>
+    <details>
+      <summary>Is this just another habit tracker? <span class="plus">+</span></summary>
+      <p>No. Habit trackers reward showing up. Powerful Progress is a goal completion system — it tracks whether your goal actually moves toward a deadline, not how many days in a row you opened the app.</p>
+    </details>
+  </div>
+</section>
+
+<section class="final reveal">
+  <div class="wrap">
+    <h2 class="title">Be first in line.</h2>
+    <div class="signup">
+      <form action="https://app.kit.com/forms/9423654/subscriptions" method="post" data-sv-form="9423654" data-uid="50858b9710" data-format="inline" data-version="5" id="waitlistForm2">
+        <input type="email" name="email_address" placeholder="you@example.com" required aria-label="Email address" />
+        <button type="submit" class="btn btn-primary" data-element="submit">Join the waitlist</button>
       </form>
+      <div class="formMsg" id="formMsg2" role="status"></div>
+      <div class="micro">No spam. Just the build, and early access before launch.</div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    <svg width="32" height="32" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="60" cy="60" r="59" fill="#000" stroke="#FFFFFF" stroke-width="2" />
-      <text x="60" y="44" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="400" letter-spacing="-0.01em">Powerful</text>
-      <line x1="25" y1="60" x2="95" y2="60" stroke="#FFFFFF" stroke-width="2" stroke-linecap="butt" />
-      <text x="60" y="78" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="400" letter-spacing="-0.01em">Progress</text>
-    </svg>
-  </div>
-  <div class="row">
-    <span>© Powerful Progress 2026</span>
-    <a href="https://instagram.com/powerfulprogress" target="_blank" rel="noopener" aria-label="Instagram">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
-      </svg>
-    </a>
+  <div class="wrap">
+    <div class="emblem small"><span>Powerful</span><span class="em-line"></span><span>Progress</span></div>
+    <div class="foot-copy">© Powerful Progress 2026</div>
+    <div class="foot-links">
+      <a href="https://instagram.com/powerful.progress" target="_blank" rel="noopener">Instagram</a>·
+      <a href="https://tiktok.com/@powerful.progress72" target="_blank" rel="noopener">TikTok</a>·
+      <a href="https://youtube.com/@powerfulprogress72" target="_blank" rel="noopener">YouTube</a>·
+      <a href="https://facebook.com/" target="_blank" rel="noopener">Facebook</a>
+    </div>
   </div>
 </footer>
 
+<!-- Kit form enhancement (inline AJAX submit + confirmation) -->
+<script async src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+
 <script>
-  // Reveal on scroll
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px 50px 0px' });
-  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-  // Override Kit's default success message text after subscription.
-  // Kit replaces the form (or its inner content) with a .formkit-message element
-  // containing "Success! Now check your email to confirm your subscription."
-  // — we swap that text for our brand copy.
-  const SUCCESS_TEXT = "You're on the list. We'll let you know when we launch.";
-  function rewriteSuccess(node) {
-    const candidates = [];
-    if (node.matches && node.matches('.formkit-message, .seva-success-message, [data-element="success"]')) {
-      candidates.push(node);
-    }
-    if (node.querySelectorAll) {
-      node.querySelectorAll('.formkit-message, .seva-success-message, [data-element="success"]').forEach((el) => candidates.push(el));
-    }
-    candidates.forEach((el) => {
-      if (el.dataset.ppRewritten === '1') return;
-      if (!el.textContent.trim()) return;
-      el.textContent = SUCCESS_TEXT;
-      el.dataset.ppRewritten = '1';
-    });
-  }
-  const successObserver = new MutationObserver((mutations) => {
-    mutations.forEach((m) => {
-      m.addedNodes && m.addedNodes.forEach((n) => {
-        if (n.nodeType === 1) rewriteSuccess(n);
-      });
-    });
-  });
-  successObserver.observe(document.body, { childList: true, subtree: true });
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('visible');}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); } });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){ io.observe(e); });
+  })();
 </script>
-
 </body>
 </html>

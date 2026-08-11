@@ -10,21 +10,29 @@
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@1,400&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#000000;
-    --text:#ffffff;
-    --muted:#a3a3aa;
-    --dim:#6e6e76;
-    --card:#0c0c0d;
-    --card-line:#1f1f22;
-    --line:#1c1c1f;
-    --chip-line:#2c2c30;
+    /* Palette lifted from the app: lib/onboarding/onboarding_theme.dart.
+       Cards are defined by a VISIBLE BORDER, not by a darker fill — the fill
+       sits four values above the page and the border does the work. Filling
+       cards darker than the page is what made the app feel heavy before. */
+    --bg:#1A1A1A;          /* the page */
+    --card:#1E1E1E;        /* a card: barely above bg, deliberately */
+    --line:#3F3F3F;        /* the standard border — this is what makes a card */
+    --line-em:#5A5A5A;     /* one step brighter: the thing to pick out */
+    --text:#FFFFFF;
+    --muted:#9A9A9A;       /* body/secondary — 6.19:1 on bg, measured */
+    --faint:#6A6A6A;       /* placeholders, disabled marks, captions */
+    --grid:#2E2E2E;        /* chart gridlines: inside a card, below --line */
+    --inv:#1A1A1A;         /* text on a light fill */
     --green:#5fd17f;
     --green-bg:rgba(95,209,127,.13);
-    --serif:'Playfair Display',Georgia,'Times New Roman',serif;
-    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --head:'Archivo',var(--sans);
+    --serif:'Spectral',Georgia,'Times New Roman',serif;  /* ITALIC, emphasis lines only */
+    --radius:13px;
     --maxw:1080px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -32,7 +40,11 @@
   body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   a{color:inherit;text-decoration:none}
-  .serif{font-family:var(--serif)}
+  /* The emphasis face. ITALIC ONLY, and only on an emphasis line — the one
+     phrase per section that carries the weight. Never on numbers, never on
+     body copy: that is the rule the app's theme states and the reason the
+     pairing reads as deliberate rather than decorative. */
+  .em{font-family:var(--serif);font-style:italic;font-weight:400}
   .muted{color:var(--muted)}
 
   /* scroll reveal */
@@ -40,110 +52,137 @@
   .reveal.visible{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
-  /* EMBLEM */
-  .emblem{width:96px;height:96px;border-radius:50%;border:1.4px solid #fff;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--serif);line-height:1.05;gap:5px}
-  .emblem span{font-size:15px;letter-spacing:.01em}
-  .emblem .em-line{display:block;width:46px;height:1px;background:#fff;opacity:.85}
+  /* EMBLEM — a wordmark, so Archivo rather than the emphasis face. */
+  .emblem{width:96px;height:96px;border-radius:50%;border:1.4px solid var(--text);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--head);line-height:1.05;gap:5px}
+  .emblem span{font-size:14px;letter-spacing:.02em;font-weight:500}
+  .emblem .em-line{display:block;width:46px;height:1px;background:var(--text);opacity:.85}
   .emblem.small{width:60px;height:60px;gap:3px}
-  .emblem.small span{font-size:10px}
+  .emblem.small span{font-size:9.5px}
   .emblem.small .em-line{width:28px}
 
   /* HERO */
   header.hero{text-align:center;padding:64px 0 88px}
-  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.6vw,50px);line-height:1.15;letter-spacing:-0.005em;margin:40px 0 0}
-  .hero p.lead{max-width:560px;margin:26px auto 0;font-size:19px;color:var(--muted)}
+  .hero h1{font-family:var(--head);font-weight:700;font-size:clamp(30px,4.4vw,46px);line-height:1.12;letter-spacing:-0.02em;margin:40px 0 0}
+  .hero h1 .em{display:block;font-weight:400;letter-spacing:-0.01em;line-height:1.15;font-size:1.04em;margin-top:.12em}
+  .hero p.lead{max-width:560px;margin:26px auto 0;font-size:18px;color:var(--muted)}
 
   /* FORM */
   .signup{max-width:600px;margin:38px auto 0}
   .signup form{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  .signup input[type=email]{flex:1;min-width:240px;background:#070707;border:1px solid var(--chip-line);color:var(--text);font-size:16px;padding:16px 20px;border-radius:14px;outline:none;font-family:var(--sans);transition:border .15s ease}
-  .signup input[type=email]::placeholder{color:var(--dim)}
-  .signup input[type=email]:focus{border-color:#48484e}
-  .btn{display:inline-block;font-weight:600;font-size:16px;padding:16px 28px;border-radius:14px;cursor:pointer;border:none;font-family:var(--sans);transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease}
-  .btn-primary{background:#fff;color:#000;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+  .signup input[type=email]{flex:1;min-width:240px;background:var(--card);border:1.5px solid var(--line);color:var(--text);font-size:16px;padding:16px 20px;border-radius:var(--radius);outline:none;font-family:var(--sans);transition:border .15s ease}
+  .signup input[type=email]::placeholder{color:var(--faint)}
+  .signup input[type=email]:focus{border-color:var(--line-em)}
+  .btn{display:inline-block;font-weight:600;font-size:16px;padding:16px 28px;border-radius:var(--radius);cursor:pointer;border:none;font-family:var(--sans);transition:transform .15s ease,opacity .15s ease}
+  .btn-primary{background:var(--text);color:var(--inv)}
   .btn-primary:hover{transform:translateY(-2px)}
   .scarcity{margin-top:18px;font-size:14px;color:var(--muted);display:inline-flex;align-items:center;gap:9px}
   .scarcity .gdot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-  .formMsg{margin-top:12px;font-size:15px;font-weight:600;color:#fff}
+  .formMsg{margin-top:12px;font-size:15px;font-weight:600;color:var(--text)}
   .formMsg:empty{display:none;margin:0}
-  .micro{margin-top:12px;font-size:13.5px;color:var(--dim)}
+  .micro{margin-top:12px;font-size:13.5px;color:var(--faint)}
   .social-proof{margin-top:30px;font-size:14px;color:var(--muted)}
-  .social-proof strong{color:#fff;font-weight:600}
+  .social-proof strong{color:var(--text);font-weight:600}
 
   /* SECTIONS */
   section{padding:90px 0}
-  h2.title{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.8vw,50px);letter-spacing:-0.005em;line-height:1.12}
+  h2.title{font-family:var(--head);font-weight:700;font-size:clamp(28px,4.4vw,44px);letter-spacing:-0.02em;line-height:1.12}
+  h2.title .em{font-weight:400;letter-spacing:-0.01em}
 
   /* WHY */
   .why .wrap{max-width:820px}
   .why h2{margin-bottom:34px}
-  .why p{font-size:19px;color:#e7e7ea;margin-bottom:22px;max-width:680px}
-  .why .em-strong{color:#fff}
+  .why p{font-size:18px;color:#E4E4E4;margin-bottom:22px;max-width:680px}
+  .why .em-strong{color:var(--text)}
 
   /* PREVIEW */
   .preview{text-align:center}
   .preview h2{margin-bottom:14px}
   .preview .sub{max-width:560px;margin:0 auto;color:var(--muted)}
   .phones{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:56px}
-  .phone-col{width:268px}
-  .phone{background:#070708;border:1px solid var(--card-line);border-radius:34px;padding:14px;box-shadow:0 30px 70px rgba(0,0,0,.7)}
-  .screen{background:#000;border-radius:24px;padding:20px 18px;min-height:460px;display:flex;flex-direction:column;text-align:left}
-  .statusbar{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:22px}
-  .scr-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
-  .scr-goal{font-family:var(--serif);font-size:23px;font-weight:600;line-height:1.15;margin-bottom:16px}
-  .bignum{font-family:var(--serif);font-size:54px;font-weight:600;line-height:1}
-  .bignum sup{font-size:24px;vertical-align:super;margin-left:1px}
-  .dayline{font-size:13px;color:var(--muted);margin:6px 0 14px}
-  .pbar{height:3px;background:#222226;border-radius:2px;overflow:hidden;margin-bottom:18px}
-  .pbar > i{display:block;height:100%;background:#fff;border-radius:2px}
-  .badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px}
-  .badge .bdot{width:6px;height:6px;border-radius:50%}
-  .badge-green{background:var(--green-bg);color:var(--green)}
-  .badge-green .bdot{background:var(--green)}
-  .badge-neutral{background:#161618;color:#bcbcc2;border:1px solid #26262a}
-  .badge-neutral .bdot{background:#8a8a90}
-  .statbox-row{display:flex;gap:12px;margin-top:22px}
-  .statbox{flex:1;border:1px solid var(--card-line);border-radius:14px;padding:14px}
-  .statbox b{font-family:var(--serif);font-size:26px;font-weight:600;display:block;line-height:1}
-  .statbox small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:block;margin-top:6px}
-  .endtag{margin-top:auto;font-size:13px;color:var(--muted);padding-top:22px}
-  .datebox{border:1px solid var(--chip-line);border-radius:12px;padding:14px 16px;font-size:15px;color:#fff;margin-bottom:18px}
-  .chips{display:flex;gap:9px;flex-wrap:wrap}
-  .chip{font-size:13px;padding:9px 14px;border-radius:999px;border:1px solid var(--chip-line);color:var(--muted)}
-  .chip.active{background:#fff;color:#000;border-color:#fff;font-weight:600}
-  .screen .btn{width:100%;text-align:center;margin-top:auto;padding:14px;font-size:15px}
-  .goalcard{border:1px solid var(--card-line);border-radius:16px;padding:16px;margin-bottom:14px}
-  .goalcard .gtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
-  .goalcard .gname{font-family:var(--serif);font-size:17px;font-weight:600;line-height:1.2}
-  .phone-cap{text-align:center;font-size:14px;color:var(--muted);margin-top:20px;line-height:1.5}
+  .phone-col{width:272px}
+  .phone{background:var(--bg);border:1.5px solid var(--line);border-radius:34px;padding:12px;box-shadow:0 30px 70px rgba(0,0,0,.55)}
+  /* One height for all three. The real screens differ in length, but three
+     phones of visibly different heights read as a layout mistake rather than
+     as honesty. The plan reveal is the tallest, so it sets the height. */
+  .screen{background:var(--bg);border-radius:24px;padding:18px 15px;height:652px;overflow:hidden;display:flex;flex-direction:column;text-align:left}
+  .statusbar{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:18px}
+
+  /* shared screen atoms, named for their app counterparts */
+  .eyebrow{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .scr-em{font-family:var(--serif);font-style:italic;font-weight:400;font-size:21px;line-height:1.15;color:var(--text)}
+  .scr-head{font-family:var(--head);font-weight:600;font-size:20px;line-height:1.15;letter-spacing:-0.02em}
+  .scr-sub{font-size:12.5px;color:var(--muted);line-height:1.5}
+  .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius)}
+  .pill-cta{background:var(--text);color:var(--inv);border-radius:999px;text-align:center;font-weight:600;font-size:14px;padding:13px}
+
+  /* plan reveal */
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:9px}
+  .stat{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 9px;display:flex;flex-direction:column;justify-content:flex-start}
+  .stat .k{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{font-family:var(--head);font-weight:600;font-size:13.5px;margin-top:2px;letter-spacing:-0.02em;white-space:nowrap}
+  .stat .s{font-size:8.5px;color:var(--faint);margin-top:2px;line-height:1.3}
+  .chart{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:9px;margin-top:8px}
+  .chart .ends{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:5px}
+  .cps{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:5px}
+  .cp{background:var(--card);border:1.5px solid var(--line);border-radius:9px;padding:6px 2px;text-align:center}
+  .cp .d{font-size:8px;letter-spacing:.08em;color:var(--muted)}
+  .cp .n{font-family:var(--head);font-size:11px;font-weight:600;margin-top:1px}
+  .act{display:flex;align-items:flex-start;gap:9px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;margin-top:5px}
+  .act.first{border-color:var(--line-em)}
+  .act .tick{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--line-em);flex-shrink:0;margin-top:1px}
+  .act .tick.done{background:var(--text);border-color:var(--text);position:relative}
+  .act .tick.done::after{content:'';position:absolute;left:4.4px;top:1.6px;width:3.6px;height:7px;border:solid var(--inv);border-width:0 1.7px 1.7px 0;transform:rotate(45deg)}
+  .act .lbl{font-size:11.5px;line-height:1.35}
+  .act .lbl.done{color:var(--faint);text-decoration:line-through}
+
+  /* today */
+  .today-h{font-family:var(--head);font-weight:700;font-size:24px;letter-spacing:-0.02em;line-height:1}
+  .today-d{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .goalcard{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:14px 0 4px}
+  .goalcard .gname{font-family:var(--head);font-weight:700;font-size:17px;letter-spacing:-0.02em;line-height:1.2}
+  .goalcard .gmeta{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .bignum{font-family:var(--head);font-weight:700;font-size:38px;line-height:1;letter-spacing:-0.03em;margin-top:8px}
+  .dayline{font-size:10.5px;color:var(--muted)}
+  .pbar{height:5px;background:#2A2A2A;border-radius:3px;overflow:hidden;margin:9px 0 11px}
+  .pbar > i{display:block;height:100%;background:var(--text);border-radius:3px}
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .tile{border:1.5px solid var(--line);border-radius:9px;padding:7px 6px}
+  .tile b{font-family:var(--head);font-size:13px;font-weight:600;display:block;line-height:1}
+  .tile small{font-size:8.5px;color:var(--muted);display:block;margin-top:3px}
+  .sec-h{display:flex;justify-content:space-between;align-items:baseline;margin:16px 0 4px}
+  .sec-h .t{font-family:var(--head);font-weight:700;font-size:14px;letter-spacing:-0.01em}
+  .sec-h .c{font-size:10.5px;color:var(--muted)}
+  .rule{height:1px;background:var(--line);margin-bottom:2px}
+
+  .phone-cap{text-align:center;font-size:13.5px;color:var(--muted);margin-top:20px;line-height:1.5}
 
   /* HOW */
   .how{text-align:center}
   .how h2{margin-bottom:56px}
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;text-align:left}
-  .step .num{font-family:var(--serif);font-size:52px;font-weight:600;color:#3a3a3f;line-height:1;margin-bottom:18px}
-  .step h3{font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em}
+  .step .num{font-family:var(--head);font-size:46px;font-weight:700;color:var(--line);line-height:1;margin-bottom:16px;letter-spacing:-0.02em}
+  .step h3{font-family:var(--head);font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:-0.02em}
   .step p{font-size:15.5px;color:var(--muted)}
 
   /* FOUNDING */
   .founding{text-align:center;border-top:1px solid var(--line)}
   .founding .wrap{max-width:720px}
   .founding h2{margin-bottom:20px}
-  .founding p.intro{font-size:19px;color:#e7e7ea;max-width:600px;margin:0 auto}
+  .founding p.intro{font-size:18px;color:#E4E4E4;max-width:600px;margin:0 auto}
   .founding ul{list-style:none;max-width:440px;margin:30px auto 30px;text-align:left}
-  .founding li{display:flex;gap:13px;align-items:flex-start;font-size:16.5px;color:#e7e7ea;padding:11px 0;border-bottom:1px solid var(--line)}
+  .founding li{display:flex;gap:13px;align-items:flex-start;font-size:16px;color:#E4E4E4;padding:11px 0;border-bottom:1px solid var(--line)}
   .founding li:last-child{border-bottom:none}
-  .founding li .ar{color:#fff;flex-shrink:0}
+  .founding li .ar{color:var(--text);flex-shrink:0}
   .founding .note{font-size:15px;color:var(--muted);margin-bottom:28px}
 
   /* FAQ */
   .faq .wrap{max-width:720px}
   .faq h2{text-align:center;margin-bottom:44px}
   details{border-bottom:1px solid var(--line);padding:22px 0}
-  details summary{font-size:18px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  details summary{font-size:17.5px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
   details summary::-webkit-details-marker{display:none}
   details summary .plus{color:var(--muted);font-size:26px;line-height:1;transition:transform .2s ease}
-  details[open] summary .plus{transform:rotate(45deg);color:#fff}
+  details[open] summary .plus{transform:rotate(45deg);color:var(--text)}
   details p{margin-top:14px;color:var(--muted);font-size:16px}
 
   /* FINAL */
@@ -151,10 +190,10 @@
   .final h2{margin-bottom:34px}
 
   footer{padding:56px 0 48px;text-align:center;border-top:1px solid var(--line)}
-  .foot-copy{margin-top:18px;color:var(--dim);font-size:13.5px}
+  .foot-copy{margin-top:18px;color:var(--faint);font-size:13.5px}
   .foot-links{margin-top:12px;font-size:14px}
   .foot-links a{color:var(--muted);margin:0 8px}
-  .foot-links a:hover{color:#fff}
+  .foot-links a:hover{color:var(--text)}
 
   @media(max-width:760px){
     .steps{grid-template-columns:1fr;gap:40px}
@@ -167,7 +206,7 @@
 <header class="hero" id="top">
   <div class="wrap">
     <div class="emblem"><span>Powerful</span><span class="em-line"></span><span>Progress</span></div>
-    <h1>Goals with endpoints.<br>Action over information.</h1>
+    <h1>Goals with endpoints.<span class="em">Action over information.</span></h1>
     <p class="lead">We're building the goal completion app that respects your time. Join the waitlist.</p>
 
     <div class="signup" id="join">
@@ -194,72 +233,112 @@
 
 <section class="preview reveal">
   <div class="wrap">
-    <h2 class="title">Designed to finish</h2>
+    <h2 class="title"><span class="em">Designed to finish</span></h2>
     <p class="sub">One goal. One number. One question — did you do the work?</p>
 
     <div class="phones">
-      <!-- Today -->
+
+      <!-- (a) THE HOOK — onboarding screen 1.
+           "You start a lot." in Archivo; the second line is the emphasis face,
+           which is the whole pairing in one screen. -->
       <div class="phone-col">
         <div class="phone">
           <div class="screen">
-            <div class="statusbar"><span>9:41</span><span>Today</span></div>
-            <div class="scr-label">Active goal</div>
-            <div class="scr-goal">Run a half marathon</div>
-            <div class="bignum">15<sup>%</sup></div>
-            <div class="dayline">Day 14 of 90</div>
-            <div class="pbar"><i style="width:15%"></i></div>
-            <div><span class="badge badge-green"><span class="bdot"></span> Done for today</span></div>
-            <div class="statbox-row">
-              <div class="statbox"><b>76</b><small>Days left</small></div>
-              <div class="statbox"><b>14</b><small>Days active</small></div>
+            <div class="statusbar"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679;</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+              <div class="scr-head" style="font-size:23px">You start a lot.</div>
+              <div class="scr-em" style="font-size:30px;margin-top:4px">Let&rsquo;s finish something.</div>
+              <p class="scr-sub" style="margin-top:14px;max-width:210px">One real goal. A hard deadline. Daily actions until it&rsquo;s done.</p>
             </div>
-            <div class="endtag">You showed up today.</div>
+            <div class="pill-cta">Get started</div>
           </div>
         </div>
-        <p class="phone-cap">The today screen will show one goal, one number, one question — did you do the work?</p>
+        <p class="phone-cap">It starts with one real goal and a hard deadline.</p>
       </div>
 
-      <!-- New goal -->
+      <!-- (b) THE PLAN REVEAL.
+           Numbers are internally consistent and are numbers the app would
+           actually produce: 1 000 pages over 90 days is ~11/day, and the
+           checkpoints are the app's own quarter marks — round(90 x n/4) days
+           against round(1000 x n/4) pages. -->
       <div class="phone-col">
         <div class="phone">
           <div class="screen">
-            <div class="statusbar"><span>9:41</span><span>New goal</span></div>
-            <div class="scr-label">Step 3 of 4</div>
-            <div class="scr-goal">Set your deadline</div>
-            <div class="datebox">1. august 2026</div>
-            <div class="chips">
-              <span class="chip">30 days</span>
-              <span class="chip active">90 days</span>
-              <span class="chip">6 months</span>
+            <div class="statusbar"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679;</span></div>
+            <div class="eyebrow">Your plan is ready</div>
+            <div class="scr-em">Read 1&#8201;000 pages</div>
+
+            <div class="stat-grid">
+              <div class="stat"><div class="k">Daily pace</div><div class="v">11 pages</div><div class="s">1&#8201;000 pages total</div></div>
+              <div class="stat"><div class="k">Deadline</div><div class="v">9 Nov</div><div class="s">90 days from today</div></div>
+              <div class="stat"><div class="k">Finish line</div><div class="v">1&#8201;000 pages</div><div class="s">Read 1&#8201;000 pages</div></div>
+              <div class="stat"><div class="k">Baseline</div><div class="v">6/10</div><div class="s">we build from here</div></div>
             </div>
-            <button class="btn btn-primary">I'm ready to start →</button>
+
+            <div class="chart">
+              <svg viewBox="0 0 240 62" width="100%" height="62" preserveAspectRatio="none" aria-hidden="true">
+                <line x1="0" y1="15" x2="240" y2="15" stroke="#2E2E2E" stroke-width="1"/>
+                <line x1="0" y1="35" x2="240" y2="35" stroke="#2E2E2E" stroke-width="1"/>
+                <line x1="0" y1="55" x2="240" y2="55" stroke="#2E2E2E" stroke-width="1"/>
+                <path d="M2 57 C 70 52, 128 33, 238 7" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="2" cy="57" r="2.6" fill="#9A9A9A"/>
+                <circle cx="238" cy="7" r="3.2" fill="#FFFFFF"/>
+              </svg>
+              <div class="ends"><span>Today</span><span>Day 90 &mdash; done</span></div>
+            </div>
+
+            <div class="eyebrow" style="margin-top:10px;margin-bottom:0">Checkpoints</div>
+            <div class="cps">
+              <div class="cp"><div class="d">DAY 23</div><div class="n">250</div></div>
+              <div class="cp"><div class="d">DAY 45</div><div class="n">500</div></div>
+              <div class="cp"><div class="d">DAY 68</div><div class="n">750</div></div>
+              <div class="cp"><div class="d">DAY 90</div><div class="n">1&#8201;000</div></div>
+            </div>
+
+            <div class="eyebrow" style="margin-top:12px;margin-bottom:0">Today&rsquo;s actions</div>
+            <div class="act first"><span class="tick"></span><span class="lbl">Read 11 pages</span></div>
+            <div class="act"><span class="tick"></span><span class="lbl">Put the book where you&rsquo;ll see it tonight</span></div>
+            <div class="act"><span class="tick"></span><span class="lbl">Decide the exact time you&rsquo;ll read</span></div>
           </div>
         </div>
-        <p class="phone-cap">Creating a goal. Four steps. Every goal must have an end date.</p>
+        <p class="phone-cap">A goal becomes a paced plan &mdash; with checkpoints, and the actions for today.</p>
       </div>
 
-      <!-- All goals -->
+      <!-- (c) TODAY.
+           Progress is measured over the WHOLE plan, so a strong fortnight of a
+           90-day goal reads 15%, not 100%. Any bigger number here would be one
+           the app cannot produce. -->
       <div class="phone-col">
         <div class="phone">
           <div class="screen">
-            <div class="statusbar"><span>9:41</span><span>All goals</span></div>
-            <div class="scr-label">2 active</div>
+            <div class="statusbar"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679;</span></div>
+            <div class="today-h">Today</div>
+            <div class="today-d">Tue, Aug 11</div>
+
             <div class="goalcard">
-              <div class="gtop"><span class="gname">Run a half marathon</span><span class="badge badge-green"><span class="bdot"></span> Ahead</span></div>
-              <div class="bignum" style="font-size:38px">14<sup style="font-size:18px">%</sup></div>
-              <div class="dayline" style="margin:6px 0 10px">Day 14 of 90</div>
-              <div class="pbar"><i style="width:14%"></i></div>
+              <div class="eyebrow" style="margin-bottom:5px">Goal progress</div>
+              <div class="gname">Complete 60 workouts</div>
+              <div class="gmeta">60 workouts &middot; 90 days</div>
+              <div class="bignum">15%</div>
+              <div class="dayline">Day 14 of 90</div>
+              <div class="pbar"><i style="width:15%"></i></div>
+              <div class="tiles">
+                <div class="tile"><b>76</b><small>Days left</small></div>
+                <div class="tile"><b>13/14</b><small>Shown up</small></div>
+                <div class="tile"><b>12/14</b><small>Completed</small></div>
+              </div>
             </div>
-            <div class="goalcard">
-              <div class="gtop"><span class="gname">Read 12 books</span><span class="badge badge-neutral"><span class="bdot"></span> On track</span></div>
-              <div class="bignum" style="font-size:38px">33<sup style="font-size:18px">%</sup></div>
-              <div class="dayline" style="margin:6px 0 10px">Day 121 of 365</div>
-              <div class="pbar"><i style="width:33%"></i></div>
-            </div>
+
+            <div class="sec-h"><span class="t">Daily Micro-Actions</span><span class="c">1/3 done</span></div>
+            <div class="rule"></div>
+            <div class="act first"><span class="tick done"></span><span class="lbl done">Complete 1 session</span></div>
+            <div class="act"><span class="tick"></span><span class="lbl">Lay your kit out before you leave</span></div>
+            <div class="act"><span class="tick"></span><span class="lbl">Name the exact hour you&rsquo;ll train</span></div>
           </div>
         </div>
-        <p class="phone-cap">Every goal in one place. Pace, not streaks. Honest status — no decoration.</p>
+        <p class="phone-cap">The work, not the decoration. Tick what you did &mdash; the plan does the arithmetic.</p>
       </div>
+
     </div>
   </div>
 </section>
@@ -289,7 +368,7 @@
 
 <section class="founding reveal">
   <div class="wrap">
-    <h2 class="title">The first 100 get lifetime.</h2>
+    <h2 class="title"><span class="em">The first 100 get lifetime.</span></h2>
     <p class="intro">Before launch, everyone on the waitlist gets the founding offer first: lifetime access at a very low one-time price — no subscription, ever. But only the first 100 people to claim it get the deal. Once those 100 spots are gone, the founding price is gone for good.</p>
     <ul>
       <li><span class="ar">→</span> Lifetime access for a single payment — never a subscription</li>
@@ -329,7 +408,7 @@
 
 <section class="final reveal">
   <div class="wrap">
-    <h2 class="title">Be first in line.</h2>
+    <h2 class="title"><span class="em">Be first in line.</span></h2>
     <div class="signup">
       <form action="https://app.kit.com/forms/9423654/subscriptions" method="post" id="waitlistForm2">
         <input type="email" name="email_address" placeholder="you@example.com" required aria-label="Email address" />

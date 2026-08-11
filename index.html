@@ -156,6 +156,18 @@
 
   .phone-cap{text-align:center;font-size:13.5px;color:var(--muted);margin-top:20px;line-height:1.5}
 
+  /* COACH */
+  .coach{text-align:center;border-top:1px solid var(--line)}
+  .coach .wrap{max-width:900px}
+  .coach h2{margin-bottom:14px}
+  .coach .sub{max-width:600px;margin:0 auto;color:var(--muted)}
+  .coach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;text-align:left}
+  .coach-card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:24px 22px}
+  .coach-card h3{font-family:var(--head);font-size:17px;font-weight:600;letter-spacing:-0.02em;margin-bottom:10px;line-height:1.25}
+  .coach-card p{font-size:15px;color:var(--muted);line-height:1.55}
+  .coach-card p .w{color:var(--text)}
+  @media(max-width:760px){.coach-grid{grid-template-columns:1fr;gap:12px}}
+
   /* HOW */
   .how{text-align:center}
   .how h2{margin-bottom:56px}
@@ -227,14 +239,14 @@
     <h2 class="title">Why we're building this</h2>
     <p>Most goal apps confuse activity with progress. They count check-ins, log streaks, and reward the act of opening the app. Time passes. The goal doesn't move.</p>
     <p>They reward showing up, not finishing. <span class="em-strong">Habits are not goals. Streaks are not outcomes.</span> A perfect 365-day streak with nothing completed is a beautifully decorated treadmill.</p>
-    <p>Powerful Progress will track completion, not consistency. You'll set a goal with a deadline. Get the smallest action that moves it forward today. The math will take care of itself — you'll take care of the work.</p>
+    <p>Powerful Progress will track completion, not consistency. You'll set a goal with a deadline. Get the day&rsquo;s actions &mdash; paced so the deadline is reachable. The math will take care of itself — you'll take care of the work.</p>
   </div>
 </section>
 
 <section class="preview reveal">
   <div class="wrap">
     <h2 class="title"><span class="em">Designed to finish</span></h2>
-    <p class="sub">One goal. One number. One question — did you do the work?</p>
+    <p class="sub">Every goal, paced. One number that means something. One question &mdash; did you do the work?</p>
 
     <div class="phones">
 
@@ -343,6 +355,28 @@
   </div>
 </section>
 
+<section class="coach reveal">
+  <div class="wrap">
+    <h2 class="title"><span class="em">It plans. You show up.</span></h2>
+    <p class="sub">A coach reads where the goal actually is, and writes what the day actually needs.</p>
+
+    <div class="coach-grid">
+      <div class="coach-card">
+        <h3>It writes each period&rsquo;s actions</h3>
+        <p>Sized to the deadline, and to <span class="w">what you said stopped you last time</span>. Not a template, and not the same list every morning.</p>
+      </div>
+      <div class="coach-card">
+        <h3>It adjusts before it asks</h3>
+        <p>Fall behind and the pace absorbs it quietly. It only opens a conversation about <span class="w">extending the deadline or lowering the target</span> when catching up would take more than the goal asked for in the first place.</p>
+      </div>
+      <div class="coach-card">
+        <h3>It says when a goal isn&rsquo;t yours to promise</h3>
+        <p>&ldquo;Lift 100&#8239;kg&rdquo; depends on programming and recovery. It will tell you so, and offer <span class="w">&ldquo;complete 40 workouts&rdquo;</span> instead. We don&rsquo;t write training programs &mdash; we make sure you show up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="how reveal">
   <div class="wrap">
     <h2 class="title">How it works</h2>
@@ -355,7 +389,7 @@
       <div class="step">
         <div class="num">02</div>
         <h3>Get your daily action</h3>
-        <p>Powerful Progress generates one small step that moves the goal forward today.</p>
+        <p>Powerful Progress writes the day&rsquo;s actions &mdash; the one that moves the number, plus the small thing that makes it happen.</p>
       </div>
       <div class="step">
         <div class="num">03</div>
@@ -397,7 +431,7 @@
     </details>
     <details>
       <summary>iPhone or Android? <span class="plus">+</span></summary>
-      <p>Powerful Progress is being built for both iOS and Android.</p>
+      <p>Built iOS-first. Android is planned.</p>
     </details>
     <details>
       <summary>Is this just another habit tracker? <span class="plus">+</span></summary>

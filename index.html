@@ -60,11 +60,43 @@
   .emblem.small span{font-size:9.5px}
   .emblem.small .em-line{width:28px}
 
-  /* HERO */
-  header.hero{text-align:center;padding:64px 0 88px}
-  .hero h1{font-family:var(--head);font-weight:700;font-size:clamp(30px,4.4vw,46px);line-height:1.12;letter-spacing:-0.02em;margin:40px 0 0}
-  .hero h1 .em{display:block;font-weight:400;letter-spacing:-0.01em;line-height:1.15;font-size:1.04em;margin-top:.12em}
-  .hero p.lead{max-width:560px;margin:26px auto 0;font-size:18px;color:var(--muted)}
+  /* HERO — mobile first, and everything below is scoped to .hero so the
+     final CTA section (which shares .signup and .btn) is untouched.
+     Budget at 390x844: the whole hero lands around 530px, so logo through
+     built-in-public sits inside the first viewport with room for browser
+     chrome. The old hero was three screen-heights of oversized type. */
+  header.hero{text-align:center;padding:32px 0 56px}
+
+  /* The real mark, not a recreation. Sized to the CIRCLE — the source PNG had
+     the mark sitting in 58% padding on baked-in black, so it is cropped to its
+     bounding box and its alpha rebuilt from luminance. Nothing redrawn. */
+  .hero .mark{display:block;width:76px;height:76px;margin:0 auto}
+
+  .hero h1{font-family:var(--head);font-weight:700;font-size:34px;line-height:1.05;letter-spacing:-0.025em;margin:28px 0 0}
+  /* One thought, two faces: the italic line sits directly under at 0.85x with
+     almost no air between them. */
+  .hero h1 .em{display:block;font-weight:400;font-size:.85em;line-height:1.1;letter-spacing:-0.01em;margin-top:.06em}
+
+  /* ~34ch so it breaks at two lines rather than three. */
+  .hero p.lead{max-width:34ch;margin:16px auto 0;font-size:15.5px;line-height:1.5;color:var(--muted)}
+
+  .hero .signup{margin:28px auto 0}
+  .hero .signup form{flex-direction:column;gap:12px}
+  .hero .signup input[type=email],.hero .signup .btn{width:100%}
+  .hero .scarcity{margin-top:12px;font-size:13px;color:var(--faint)}
+  .hero .social-proof{margin-top:20px;font-size:13px;color:var(--muted)}
+
+  @media(min-width:640px){
+    header.hero{padding:56px 0 80px}
+    .hero .mark{width:96px;height:96px}
+    .hero h1{font-size:52px;margin-top:32px}
+    .hero p.lead{font-size:17px;max-width:40ch;margin-top:18px}
+    .hero .signup{margin-top:32px}
+    /* Inline from here: input flexes, button takes its content width. */
+    .hero .signup form{flex-direction:row;gap:10px;align-items:stretch}
+    .hero .signup input[type=email]{width:auto;flex:1}
+    .hero .signup .btn{width:auto;flex:0 0 auto}
+  }
 
   /* FORM */
   .signup{max-width:600px;margin:38px auto 0}
@@ -217,7 +249,8 @@
 
 <header class="hero" id="top">
   <div class="wrap">
-    <div class="emblem"><span>Powerful</span><span class="em-line"></span><span>Progress</span></div>
+    <img class="mark" src="/logo-mark@1x.png" srcset="/logo-mark@1x.png 1x, /logo-mark@2x.png 2x"
+         width="96" height="96" alt="Powerful Progress" fetchpriority="high" decoding="async" />
     <h1>Goals with endpoints.<span class="em">Action over information.</span></h1>
     <p class="lead">We're building the goal completion app that respects your time. Join the waitlist.</p>
 

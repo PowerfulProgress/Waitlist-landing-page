@@ -60,42 +60,76 @@
   .emblem.small span{font-size:9.5px}
   .emblem.small .em-line{width:28px}
 
-  /* HERO — mobile first, and everything below is scoped to .hero so the
-     final CTA section (which shares .signup and .btn) is untouched.
-     Budget at 390x844: the whole hero lands around 530px, so logo through
-     built-in-public sits inside the first viewport with room for browser
-     chrome. The old hero was three screen-heights of oversized type. */
+  /* HERO — mobile first, everything scoped to .hero so the final CTA section
+     (which shares .signup and .btn) is untouched. */
   header.hero{text-align:center;padding:32px 0 56px}
+  .hero .hero-grid{display:block}
 
-  /* The real mark, not a recreation. Sized to the CIRCLE — the source PNG had
-     the mark sitting in 58% padding on baked-in black, so it is cropped to its
-     bounding box and its alpha rebuilt from luminance. Nothing redrawn. */
+  /* The measure. ~330px on a 390 viewport — the previous full-bleed column
+     read as a wall of text. The sub keeps its own tighter measure inside. */
+  .hero-copy{max-width:85vw;margin:0 auto}
+
   .hero .mark{display:block;width:76px;height:76px;margin:0 auto}
 
-  .hero h1{font-family:var(--head);font-weight:700;font-size:34px;line-height:1.05;letter-spacing:-0.025em;margin:28px 0 0}
-  /* One thought, two faces: the italic line sits directly under at 0.85x with
-     almost no air between them. */
-  .hero h1 .em{display:block;font-weight:400;font-size:.85em;line-height:1.1;letter-spacing:-0.01em;margin-top:.06em}
+  .hero .eyebrow-hero{margin:22px 0 0;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 
-  /* ~34ch so it breaks at two lines rather than three. */
-  .hero p.lead{max-width:34ch;margin:16px auto 0;font-size:15.5px;line-height:1.5;color:var(--muted)}
+  /* ONE LINE, ALWAYS. Sized off the viewport rather than a fixed step, so the
+     headline shrinks to fit instead of wrapping: 6.9vw puts it near 27px at
+     390 and hits the 54px ceiling around 780. white-space:nowrap is the
+     guarantee — the clamp is what stops it needing to be enforced. */
+  .hero h1{font-family:var(--head);font-weight:700;font-size:clamp(26px,8.3vw,54px);line-height:1.05;letter-spacing:-0.025em;margin:10px 0 0;white-space:nowrap}
+  .hero h1 .em{display:block;font-weight:400;font-size:.85em;line-height:1.1;letter-spacing:-0.01em;margin-top:.06em;white-space:nowrap}
 
-  .hero .signup{margin:28px auto 0}
+  .hero p.lead{max-width:32ch;margin:16px auto 0;font-size:15px;line-height:1.5;color:var(--muted)}
+
+  .hero .signup{margin:24px auto 0;max-width:100%}
   .hero .signup form{flex-direction:column;gap:12px}
   .hero .signup input[type=email],.hero .signup .btn{width:100%}
   .hero .scarcity{margin-top:12px;font-size:13px;color:var(--faint)}
+  .hero .scarcity .nb{white-space:nowrap}
   .hero .social-proof{margin-top:20px;font-size:13px;color:var(--muted)}
+
+  /* The product shot is desktop-only; on mobile the mockups stay in their
+     section below, untouched. */
+  .hero-shot{display:none}
 
   @media(min-width:640px){
     header.hero{padding:56px 0 80px}
+    .hero-copy{max-width:560px}
     .hero .mark{width:96px;height:96px}
-    .hero h1{font-size:52px;margin-top:32px}
-    .hero p.lead{font-size:17px;max-width:40ch;margin-top:18px}
-    .hero .signup{margin-top:32px}
-    /* Inline from here: input flexes, button takes its content width. */
+    .hero .eyebrow-hero{margin-top:26px;font-size:11.5px}
+    .hero h1{margin-top:12px}
+    .hero p.lead{font-size:16.5px;max-width:44ch;margin-top:18px}
+    .hero .signup{margin-top:30px}
     .hero .signup form{flex-direction:row;gap:10px;align-items:stretch}
     .hero .signup input[type=email]{width:auto;flex:1}
     .hero .signup .btn{width:auto;flex:0 0 auto}
+  }
+
+  /* DESKTOP: product beside the decision. Two columns from 1024, copy left and
+     the plan reveal right — the strongest screen we have, and the one that
+     answers "what is this" faster than the paragraph can. */
+  @media(min-width:1024px){
+    header.hero{text-align:left;padding:64px 0 72px}
+    .hero .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:56px;align-items:center}
+    .hero-copy{max-width:none;margin:0}
+    .hero .mark{margin:0}
+    .hero h1{font-size:clamp(40px,3.7vw,54px)}
+    .hero p.lead{margin-left:0;margin-right:0;max-width:42ch}
+    .hero .signup{margin-left:0;margin-right:0}
+    .hero .signup form{justify-content:flex-start}
+    .hero .scarcity,.hero .social-proof{justify-content:flex-start}
+
+    .hero-shot{display:block;width:380px;justify-self:end}
+    /* The mockup is built at 272px. Scaled rather than re-laid-out, so the
+       screen inside keeps the proportions it was tuned at — and clipped at the
+       foot, which is the standard product-shot treatment and beats shrinking
+       a 676px phone until its type is unreadable. */
+    .hero-shot .phone{width:272px;transform:scale(1.24);transform-origin:top left}
+    .hero-shot{height:660px;overflow:hidden;
+      -webkit-mask-image:linear-gradient(to bottom,#000 84%,transparent 100%);
+              mask-image:linear-gradient(to bottom,#000 84%,transparent 100%)}
+    .hero-shot .phone-cap{display:none}
   }
 
   /* FORM */
@@ -248,21 +282,69 @@
 <body>
 
 <header class="hero" id="top">
-  <div class="wrap">
-    <img class="mark" src="/logo-mark@1x.png" srcset="/logo-mark@1x.png 1x, /logo-mark@2x.png 2x"
-         width="96" height="96" alt="Powerful Progress" fetchpriority="high" decoding="async" />
-    <h1>Goals with endpoints.<span class="em">Action over information.</span></h1>
-    <p class="lead">We're building the goal completion app that respects your time. Join the waitlist.</p>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <img class="mark" src="/logo-mark@1x.png" srcset="/logo-mark@1x.png 1x, /logo-mark@2x.png 2x"
+           width="96" height="96" alt="Powerful Progress" fetchpriority="high" decoding="async" />
+      <p class="eyebrow-hero">AI-powered goal completion</p>
+      <h1>Goals with endpoints.<span class="em">Action over information.</span></h1>
+      <p class="lead">Set a real goal with a deadline. An AI coach writes your daily actions and adjusts when life happens.</p>
 
-    <div class="signup" id="join">
-      <!-- Kit form 9423654 — submitted via fetch in the script below -->
-      <form action="https://app.kit.com/forms/9423654/subscriptions" method="post" id="waitlistForm">
-        <input type="email" name="email_address" placeholder="you@example.com" required aria-label="Email address" />
-        <button type="submit" class="btn btn-primary">Join the waitlist</button>
-      </form>
-      <div class="scarcity"><span class="gdot"></span> First 100 lock in lifetime at our lowest price ever. No spam.</div>
-      <div class="formMsg" id="formMsg" role="status"></div>
-      <p class="social-proof">Built in public for <strong>200,000+</strong> across TikTok, Instagram &amp; YouTube</p>
+      <div class="signup" id="join">
+        <!-- Kit form 9423654 — submitted via fetch in the script below -->
+        <form action="https://app.kit.com/forms/9423654/subscriptions" method="post" id="waitlistForm">
+          <input type="email" name="email_address" placeholder="you@example.com" required aria-label="Email address" />
+          <button type="submit" class="btn btn-primary">Join the waitlist</button>
+        </form>
+        <div class="scarcity"><span class="gdot"></span><span>First 100 lock in lifetime pricing. <span class="nb">No&nbsp;spam.</span></span></div>
+        <div class="formMsg" id="formMsg" role="status"></div>
+        <p class="social-proof">Built in public for <strong>200,000+</strong> across TikTok, Instagram &amp; YouTube</p>
+      </div>
+    </div>
+
+    <!-- The plan reveal, reused verbatim from the preview section below.
+         Desktop only (>=1024px): aria-hidden because it is the same content a
+         screen reader already meets further down the page. -->
+    <div class="hero-shot" aria-hidden="true">
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679;</span></div>
+          <div class="eyebrow">Your plan is ready</div>
+          <div class="scr-em">Read 1&#8201;000 pages</div>
+
+          <div class="stat-grid">
+            <div class="stat"><div class="k">Daily pace</div><div class="v">11 pages</div><div class="s">1&#8201;000 pages total</div></div>
+            <div class="stat"><div class="k">Deadline</div><div class="v">9 Nov</div><div class="s">90 days from today</div></div>
+            <div class="stat"><div class="k">Finish line</div><div class="v">1&#8201;000 pages</div><div class="s">Read 1&#8201;000 pages</div></div>
+            <div class="stat"><div class="k">Baseline</div><div class="v">6/10</div><div class="s">we build from here</div></div>
+          </div>
+
+          <div class="chart">
+            <svg viewBox="0 0 240 62" width="100%" height="62" preserveAspectRatio="none" aria-hidden="true">
+              <line x1="0" y1="15" x2="240" y2="15" stroke="#2E2E2E" stroke-width="1"/>
+              <line x1="0" y1="35" x2="240" y2="35" stroke="#2E2E2E" stroke-width="1"/>
+              <line x1="0" y1="55" x2="240" y2="55" stroke="#2E2E2E" stroke-width="1"/>
+              <path d="M2 57 C 70 52, 128 33, 238 7" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="2" cy="57" r="2.6" fill="#9A9A9A"/>
+              <circle cx="238" cy="7" r="3.2" fill="#FFFFFF"/>
+            </svg>
+            <div class="ends"><span>Today</span><span>Day 90 &mdash; done</span></div>
+          </div>
+
+          <div class="eyebrow" style="margin-top:10px;margin-bottom:0">Checkpoints</div>
+          <div class="cps">
+            <div class="cp"><div class="d">DAY 23</div><div class="n">250</div></div>
+            <div class="cp"><div class="d">DAY 45</div><div class="n">500</div></div>
+            <div class="cp"><div class="d">DAY 68</div><div class="n">750</div></div>
+            <div class="cp"><div class="d">DAY 90</div><div class="n">1&#8201;000</div></div>
+          </div>
+
+          <div class="eyebrow" style="margin-top:12px;margin-bottom:0">Today&rsquo;s actions</div>
+          <div class="act first"><span class="tick"></span><span class="lbl">Read 11 pages</span></div>
+          <div class="act"><span class="tick"></span><span class="lbl">Put the book where you&rsquo;ll see it tonight</span></div>
+          <div class="act"><span class="tick"></span><span class="lbl">Decide the exact time you&rsquo;ll read</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </header>

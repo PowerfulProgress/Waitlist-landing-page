@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — Powerful Progress</title>
+<meta name="description" content="What Powerful Progress collects, why, and what we will never do with it." />
+<meta name="robots" content="index,follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Spectral:ital,wght@1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Same tokens as index.html, from the app's onboarding_theme.dart. */
+    --bg:#1A1A1A; --card:#1E1E1E; --line:#3F3F3F; --line-em:#5A5A5A;
+    --text:#FFFFFF; --muted:#9A9A9A; --faint:#6A6A6A;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --head:'Archivo',var(--sans);
+    --serif:'Spectral',Georgia,'Times New Roman',serif;
+    --radius:13px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);
+       font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 22px 96px}
+
+  /* Back link — the only navigation. No nav bar, no signup form. */
+  .back{display:inline-block;font-size:13.5px;color:var(--muted);text-decoration:none;
+        padding:6px 0;margin-bottom:34px;transition:color .15s ease}
+  .back:hover{color:var(--text)}
+
+  /* Spectral italic is reserved for the page title and nothing else. */
+  h1{font-family:var(--serif);font-style:italic;font-weight:400;
+     font-size:clamp(30px,6.4vw,40px);line-height:1.15;letter-spacing:-0.01em;
+     margin:0 0 10px}
+  .updated{font-size:13.5px;color:var(--faint);margin-bottom:34px;line-height:1.6}
+  .lede{font-size:17px;color:var(--muted);margin-bottom:36px}
+
+  h2{font-family:var(--head);font-weight:600;font-size:19px;letter-spacing:-0.02em;
+     line-height:1.3;color:var(--text);margin:44px 0 14px;
+     padding-top:24px;border-top:1px solid var(--line)}
+  h2:first-of-type{border-top:none;padding-top:0}
+
+  p{margin:0 0 18px;color:var(--muted)}
+  p strong,li strong{color:var(--text);font-weight:600}
+  a{color:var(--text);text-decoration:underline;text-underline-offset:3px;
+    text-decoration-color:var(--line-em)}
+  a:hover{text-decoration-color:var(--text)}
+
+  ul{margin:0 0 18px;padding-left:0;list-style:none}
+  li{position:relative;padding-left:20px;margin-bottom:11px;color:var(--muted)}
+  li::before{content:'';position:absolute;left:3px;top:11px;width:5px;height:1.5px;
+             background:var(--line-em)}
+
+  /* Lettered clauses keep their own marker — a) b) c) is how they are cited. */
+  ol.lettered{margin:0 0 18px;padding:0;list-style:none}
+  ol.lettered li{position:relative;padding-left:28px;margin-bottom:11px;color:var(--muted)}
+  ol.lettered .mk{position:absolute;left:0;top:0;color:var(--faint);font-variant-numeric:tabular-nums}
+
+  /* The address block and any other hard-wrapped run of short lines. */
+  .block{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);
+         padding:18px 20px;margin:0 0 22px;color:var(--muted);line-height:1.7}
+  .block strong{color:var(--text)}
+
+  /* Tables carry the card treatment: border-defined, never a darker fill. */
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 24px;
+             border:1.5px solid var(--line);border-radius:var(--radius);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:460px;font-size:14.5px}
+  th{font-family:var(--head);font-weight:600;font-size:11px;letter-spacing:.1em;
+     text-transform:uppercase;color:var(--muted);text-align:left;
+     padding:13px 16px;border-bottom:1.5px solid var(--line);white-space:nowrap}
+  td{padding:13px 16px;color:var(--muted);border-bottom:1px solid var(--line);
+     vertical-align:top;line-height:1.55}
+  tr:last-child td{border-bottom:none}
+
+  /* ALL-CAPS statutory paragraphs: legible, not shouted. */
+  p.caps{font-size:14px;letter-spacing:.01em;color:var(--faint);line-height:1.7}
+
+  footer{margin-top:64px;padding-top:26px;border-top:1px solid var(--line);
+         font-size:13px;color:var(--faint)}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--text)}
+
+  @media(max-width:520px){
+    .wrap{padding:22px 18px 72px}
+    body{font-size:15.5px}
+    h2{font-size:17.5px;margin-top:38px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">&larr; Powerful Progress</a>
+  <h1>Privacy Policy</h1>
+  <div class="updated">Last updated: 13 August 2026</div>
+<p>Powerful Progress is a goal-completion app. This policy explains what data we collect, why, and what we will never do with it. We have tried to write it so you can actually read it.</p>
+<h2>Who is responsible</h2>
+<p>The data controller is:</p>
+<div class="block"><strong>Eivind Kylland (sole proprietorship / enkeltpersonforetak)</strong><br>Org. no. 937 272 707<br>Bordalssvingen 72, 4639 Kristiansand S, Norway<br>Contact: <a href="mailto:support@powerfulprogress.app">support@powerfulprogress.app</a></div>
+<h2>What we collect</h2>
+<p><strong>Account data.</strong> Your email address and an encrypted password (or your Google sign-in identity), managed through Firebase Authentication.</p>
+<p><strong>Your goals and progress.</strong> Goal titles, targets, deadlines, daily and weekly actions, completions, checkpoints, day ratings, and notes you write in the app.</p>
+<p><strong>Onboarding answers.</strong> What you answer during setup — the area you want to change, what has stopped you before, how you want to feel, your self-rated discipline — including anything you type in free-text fields.</p>
+<p><strong>Coach conversations.</strong> Messages you exchange with the AI coach.</p>
+<p><strong>Purchase status.</strong> Whether you have an active subscription or lifetime access. Payments themselves are processed by Apple (and RevenueCat as our subscription infrastructure) — we never see or store your card details.</p>
+<p><strong>Technical and usage data.</strong> Basic app events (for example that onboarding was completed or a goal was created), timestamps, and anonymised AI-usage logs used for cost control and abuse prevention. These anonymised logs contain no user ID and no message content.</p>
+<p>We do not collect your location, contacts, photos, or advertising identifiers. There is no ad tracking in the app.</p>
+<p><strong>A note on sensitive information.</strong> Goals are free text, so what you write is up to you. A goal or note could reveal something about your health, mental health, or personal circumstances — for example a fitness goal, or a note about how a day went. Where the information you choose to enter falls into a special category under Article 9 of the GDPR, we process it only on the basis of your explicit consent, given when you enter it, and only to run the service for you. You are never required to enter sensitive information, and you can delete anything you have written at any time.</p>
+<h2>Why we collect it</h2>
+<ul><li><strong>To run the service</strong> — storing your goals, computing your progress, and generating your daily and weekly actions. Legal basis: performance of our contract with you.</li><li><strong>To power the AI coach</strong> — your goal text, onboarding answers and coach messages are sent to our AI provider to generate your plan and coach replies. Legal basis: performance of contract.</li><li><strong>To keep the service safe and affordable</strong> — anonymised usage logs, rate limiting and abuse prevention. Legal basis: legitimate interest.</li><li><strong>To email you</strong> — only if you joined our waitlist or newsletter. Legal basis: consent, which you can withdraw at any time via the unsubscribe link.</li></ul>
+<h2>Our promises</h2>
+<ul><li><strong>Your content is never used to train AI models.</strong> Not by us, and not by our AI provider. What you write is used to generate your plan and your coach's replies — nothing else.</li><li><strong>We never sell your data.</strong> To anyone, for any reason.</li><li><strong>No advertising networks track you</strong> in the app or on our website.</li></ul>
+<p>If any of this were ever to change, we would ask for your explicit consent first — a policy update alone would not be enough.</p>
+<h2>Who processes data on our behalf</h2>
+<p>We use a small number of service providers, each bound by data processing agreements:</p>
+<div class="tablewrap"><table><thead><tr><th>Provider</th><th>What they do</th><th>Where</th></tr></thead><tbody><tr><td>Google Firebase</td><td>Database, authentication, server functions</td><td>USA (EU–US Data Privacy Framework)</td></tr><tr><td>Anthropic</td><td>AI generation for plans and coaching</td><td>USA (no training on your data)</td></tr><tr><td>RevenueCat</td><td>Subscription management</td><td>USA</td></tr><tr><td>Apple</td><td>Payment processing</td><td>Per your App Store region</td></tr><tr><td>Kit</td><td>Waitlist and newsletter emails (website only)</td><td>USA</td></tr><tr><td>Vercel / Cloudflare</td><td>Website hosting and network</td><td>USA/EU</td></tr></tbody></table></div>
+<p>Where data is transferred outside the EEA, it is protected by the EU–US Data Privacy Framework or Standard Contractual Clauses.</p>
+<h2>If the business changes hands</h2>
+<p>If Powerful Progress is ever sold, merged, or transferred, your data may transfer with it. We would tell you in advance, and any new owner would be bound by this policy until you were asked to accept a new one. Your right to delete your account before that happens is unaffected.</p>
+<h2>How long we keep it</h2>
+<p>Your data is kept for as long as you have an account.</p>
+<p><strong>When you delete your account</strong> (Profile → Delete account), all your data — goals, progress, notes, coach conversations, and account details — is deleted immediately from our systems. Copies may persist in our providers' technical backups for up to 30 days before being automatically erased.</p>
+<p>Anonymised usage logs (which cannot be linked back to you) are kept for cost monitoring.</p>
+<h2>Your rights</h2>
+<p>Under the GDPR you can:</p>
+<ul><li><strong>Access</strong> the data we hold about you</li><li><strong>Correct</strong> anything that is wrong</li><li><strong>Delete</strong> everything — built into the app under Profile → Delete account</li><li><strong>Export</strong> your data in a portable format — email us and we will provide it</li><li><strong>Object</strong> to processing based on our legitimate interests</li><li><strong>Restrict</strong> processing in certain circumstances</li><li><strong>Ask for human review</strong> of anything generated automatically — the AI writes your plan, but a person will look at it if you ask</li><li><strong>Withdraw consent</strong> at any time, including for emails and for any sensitive information you have entered. Withdrawal does not affect processing that already took place lawfully.</li><li><strong>Complain</strong> to the Norwegian Data Protection Authority (Datatilsynet, www.datatilsynet.no) if you believe we are handling your data unlawfully</li></ul>
+<p>To exercise any of these, email <a href="mailto:support@powerfulprogress.app.">support@powerfulprogress.app.</a> We respond within 30 days.</p>
+<h2>How we protect your data</h2>
+<p>Your data is encrypted in transit (TLS) and at rest. Access is restricted by per-user security rules verified by automated tests, server functions run with least-privilege access, and our AI-usage logs are anonymised by design. No system is perfectly secure, but security has been reviewed and tested as part of building this app, and we treat it as an ongoing obligation.</p>
+<h2>Automated processing</h2>
+<p>Your daily and weekly actions and coach replies are generated automatically by an AI model based on what you enter. This automation exists to run the service you signed up for — it does not make legal decisions about you or decisions with similar significant effects. You can always disregard generated suggestions, edit your plan, or contact us with questions about how something was generated.</p>
+<h2>Cookies</h2>
+<p>The app contains no advertising or tracking cookies. Our website (powerfulprogress.app) uses only what is technically necessary to function and to process waitlist signups through Kit; we do not run advertising pixels or cross-site tracking.</p>
+<h2>Age</h2>
+<p>Powerful Progress is for users aged 17 and older. We do not knowingly collect data from anyone younger. If you believe a minor has created an account, contact us and we will delete it.</p>
+<h2>Changes to this policy</h2>
+<p>We may update this policy as the service evolves. For material changes we will notify you in the app or by email with reasonable notice before they take effect. For any new use of your personal data, we will ask for your consent — continued silence is not consent for new purposes.</p>
+<h2>Contact</h2>
+<p>Questions about your data: <strong><a href="mailto:support@powerfulprogress.app">support@powerfulprogress.app</a></strong></p>
+  <footer>
+    <a href="/">Powerful Progress</a> &middot;
+    <a href="/privacy">Privacy</a> &middot;
+    <a href="/terms">Terms</a>
+  </footer>
+</div>
+</body>
+</html>

@@ -600,6 +600,27 @@
   // Waitlist signup → Kit (fetch submit, keeps the visitor on the page)
   (function(){
     var ENDPOINT = 'https://app.kit.com/forms/9423654/subscriptions';
+
+    // Traffic source → Kit custom field "source".
+    // Priority: ?src= (or ?utm_source=) in the URL → remembered for the visit → referrer host → 'direct'.
+    // Share links as powerfulprogress.app/?src=yt | ?src=ig | ?src=tt (in-app browsers often send no referrer).
+    function getSource(){
+      var KEY = 'pp_src';
+      try{
+        var q = new URLSearchParams(location.search);
+        var fromUrl = (q.get('src') || q.get('utm_source') || '').trim().toLowerCase().slice(0,40);
+        if(fromUrl){ sessionStorage.setItem(KEY, fromUrl); return fromUrl; }
+        var saved = sessionStorage.getItem(KEY);
+        if(saved){ return saved; }
+        if(document.referrer){
+          var host = new URL(document.referrer).hostname.replace(/^(www|l|lm|m)\./,'');
+          if(host && host.indexOf('powerfulprogress.app') === -1){ sessionStorage.setItem(KEY, 'ref:'+host); return 'ref:'+host; }
+        }
+      }catch(e){}
+      return 'direct';
+    }
+    getSource(); // capture ?src= on first load, before the visitor scrolls
+
     function wire(form){
       if(!form) return;
       var msg = form.parentNode.querySelector('.formMsg');
@@ -612,6 +633,7 @@
         var label = btn ? btn.textContent : '';
         if(btn){ btn.disabled = true; btn.textContent = 'Joining…'; }
         var body = new URLSearchParams(); body.append('email_address', email);
+        body.append('fields[source]', getSource());
         fetch(ENDPOINT, { method:'POST', mode:'no-cors', body: body }).then(done).catch(done);
         function done(){
           if(msg){ msg.textContent = "You're on the list. Check your inbox to confirm."; }

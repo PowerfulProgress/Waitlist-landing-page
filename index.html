@@ -636,7 +636,7 @@
         body.append('fields[source]', getSource());
         fetch(ENDPOINT, { method:'POST', mode:'no-cors', body: body }).then(done).catch(done);
         function done(){
-          if(msg){ msg.textContent = "You're on the list. Check your inbox to confirm."; }
+          if(msg){ msg.textContent = "You're in. Your first email lands within a minute — check Promotions if it isn't in your inbox."; }
           form.reset();
           if(btn){ btn.disabled = false; btn.textContent = label; }
         }
